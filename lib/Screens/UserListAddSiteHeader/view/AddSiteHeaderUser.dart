@@ -94,313 +94,6 @@ class _AddsiteheaderuserState extends State<Addsiteheaderuser> {
                 ),
               ),
             ),
-            Expanded(
-                child: FutureBuilder<List<Hospital>>(
-                    future: addSiteHeadController.fetchHospitals(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                            child:
-                                CircularProgressIndicator()); // Loading state
-                      } else if (snapshot.hasError) {
-                        return Center(
-                            child: Text(
-                                "Error: ${snapshot.error}")); // Error state
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(
-                            child: Text("No hospitals found")); // No data state
-                      } else {
-                        List<Hospital> hospitals = snapshot.data!;
-
-                        return ListView.builder(
-                          itemCount: hospitals.length,
-                          itemBuilder: (context, index) {
-                            Hospital hospital = hospitals[index];
-
-                            return ListTile(
-                              leading: CircleAvatar(
-                                radius: 50,
-                                backgroundImage: AssetImage(
-                                  "assets/images/2.png",
-                                ),
-                              ),
-
-                              // Image.asset(
-                              //   _foundUsers[index]["image"],
-                              //   fit: BoxFit.fill,
-                              //   width: 90,
-                              //   height: 100,
-                              // ),
-                              // Image.asset("assets/images/2.png",
-                              //     width: 50, height: 50, fit: BoxFit.cover),
-                              //Image.network("YOUR_IMAGE_BASE_URL/${hospital.image}",
-
-                              title: Text(
-                                  "${hospital.firstName} ${hospital.lastName}"),
-                              subtitle: Text("${hospital.fieldSiteName}"
-                                  // "\n${hospital.mobileNumber}"
-                                  ),
-                              isThreeLine: true,
-                              trailing: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, left: 13),
-                                child: PopupMenuButton<SampleItem>(
-                                  initialValue: selectedItem,
-                                  onSelected: (SampleItem item) {
-                                    setState(() {
-                                      selectedItem = item;
-                                    });
-                                  },
-                                  itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry<SampleItem>>[
-                                    PopupMenuItem<SampleItem>(
-                                      value: SampleItem.itemOne,
-                                      child: Row(
-                                        children: [
-                                          TextButton(
-                                              onPressed: () {
-                                                // userListSiteHeaderController
-                                                //     .editItem(index, context);
-                                                // showAlertDialog(context);
-                                              },
-                                              child: Text(
-                                                "Edit",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.normal),
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuItem<SampleItem>(
-                                      value: SampleItem.itemTwo,
-                                      child: Row(
-                                        children: [
-                                          TextButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  hospitals.removeAt(index);
-                                                });
-                                              },
-                                              child: Text(
-                                                "Remove",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.normal),
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuItem<SampleItem>(
-                                      value: SampleItem.itemTwo,
-                                      child: Row(
-                                        children: [
-                                          TextButton(
-                                              onPressed: () {
-                                                setState(() {});
-                                              },
-                                              child: Text(
-                                                "Disable",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.normal),
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                      //         // Padding(
-                      //         //   padding: const EdgeInsets.all(10),
-                      //         //   child: Column(
-                      //         //     children: [
-                      //         //       userListSiteHeaderController.foundUsers.isNotEmpty
-                      //         //           ? Expanded(
-                      //         //               child:
-                      //         //               ListView.builder(
-                      //         //               itemCount: userListSiteHeaderController.foundUsers.length,
-                      //         //               itemBuilder: (BuildContext context, int index) {
-                      //         //                 return SingleChildScrollView(
-                      //         //                   child: ListTile(
-                      //         //                     leading: CircleAvatar(
-                      //         //                       radius: 45,
-                      //         //                       backgroundImage: AssetImage(
-                      //         //                         userListSiteHeaderController.foundUsers[index]
-                      //         //                             ["image"],
-                      //         //                       ),
-                      //         //                     ),
-                      //         //                     // Image.asset(
-                      //         //                     //   _foundUsers[index]["image"],
-                      //         //                     //   fit: BoxFit.fill,
-                      //         //                     //   width: 90,
-                      //         //                     //   height: 100,
-                      //         //                     // ),
-                      //         //                     title: Column(
-                      //         //                       children: [
-                      //         //                         Row(
-                      //         //                           mainAxisAlignment:
-                      //         //                               MainAxisAlignment.spaceBetween,
-                      //         //                           children: [
-                      //         //                             Padding(
-                      //         //                               padding: const EdgeInsets.only(top: 15),
-                      //         //                               child: Text(
-                      //         //                                 userListSiteHeaderController
-                      //         //                                     .foundUsers[index]["name"],
-                      //         //                                 style: TextStyle(
-                      //         //                                     fontSize: 18,
-                      //         //                                     color: Colors.black,
-                      //         //                                     fontWeight: FontWeight.bold),
-                      //         //                               ),
-                      //         //                             ),
-                      //         //                             Padding(
-                      //         //                               padding: const EdgeInsets.only(
-                      //         //                                   top: 10, left: 13),
-                      //         //                               child: PopupMenuButton<SampleItem>(
-                      //         //                                 initialValue: selectedItem,
-                      //         //                                 onSelected: (SampleItem item) {
-                      //         //                                   setState(() {
-                      //         //                                     selectedItem = item;
-                      //         //                                   });
-                      //         //                                 },
-                      //         //                                 itemBuilder: (BuildContext context) =>
-                      //         //                                     <PopupMenuEntry<SampleItem>>[
-                      //         //                                   PopupMenuItem<SampleItem>(
-                      //         //                                     value: SampleItem.itemOne,
-                      //         //                                     child: Row(
-                      //         //                                       children: [
-                      //         //                                         TextButton(
-                      //         //                                             onPressed: () {
-                      //         //                                               userListSiteHeaderController
-                      //         //                                                   .editItem(
-                      //         //                                                       index, context);
-                      //         //                                               // showAlertDialog(context);
-                      //         //                                             },
-                      //         //                                             child: Text(
-                      //         //                                               "Edit",
-                      //         //                                               style: TextStyle(
-                      //         //                                                   fontSize: 18,
-                      //         //                                                   color: Colors.black,
-                      //         //                                                   fontWeight:
-                      //         //                                                       FontWeight.normal),
-                      //         //                                             ))
-                      //         //                                       ],
-                      //         //                                     ),
-                      //         //                                   ),
-                      //         //                                   PopupMenuItem<SampleItem>(
-                      //         //                                     value: SampleItem.itemTwo,
-                      //         //                                     child: Row(
-                      //         //                                       children: [
-                      //         //                                         TextButton(
-                      //         //                                             onPressed: () {
-                      //         //                                               setState(() {
-                      //         //                                                 userListSiteHeaderController
-                      //         //                                                     .foundUsers
-                      //         //                                                     .removeAt(index);
-                      //         //                                               });
-                      //         //                                             },
-                      //         //                                             child: Text(
-                      //         //                                               "Remove",
-                      //         //                                               style: TextStyle(
-                      //         //                                                   fontSize: 18,
-                      //         //                                                   color: Colors.black,
-                      //         //                                                   fontWeight:
-                      //         //                                                       FontWeight.normal),
-                      //         //                                             ))
-                      //         //                                       ],
-                      //         //                                     ),
-                      //         //                                   ),
-                      //         //                                   PopupMenuItem<SampleItem>(
-                      //         //                                     value: SampleItem.itemTwo,
-                      //         //                                     child: Row(
-                      //         //                                       children: [
-                      //         //                                         TextButton(
-                      //         //                                             onPressed: () {
-                      //         //                                               setState(() {});
-                      //         //                                             },
-                      //         //                                             child: Text(
-                      //         //                                               "Disable",
-                      //         //                                               style: TextStyle(
-                      //         //                                                   fontSize: 18,
-                      //         //                                                   color: Colors.black,
-                      //         //                                                   fontWeight:
-                      //         //                                                       FontWeight.normal),
-                      //         //                                             ))
-                      //         //                                       ],
-                      //         //                                     ),
-                      //         //                                   ),
-                      //         //                                 ],
-                      //         //                               ),
-                      //         //                             )
-                      //         //                           ],
-                      //         //                         ),
-                      //         //                         Row(
-                      //         //                           children: [
-                      //         //                             Text(
-                      //         //                               userListSiteHeaderController
-                      //         //                                   .foundUsers[index]["des"],
-                      //         //                               style: TextStyle(
-                      //         //                                   fontSize: 14,
-                      //         //                                   color: Colors.black,
-                      //         //                                   fontWeight: FontWeight.normal),
-                      //         //                             ),
-                      //         //                           ],
-                      //         //                         ),
-                      //         //                         // Row(
-                      //         //                         //   children: [
-                      //         //                         //     Text(
-                      //         //                         //       userListSiteHeaderController
-                      //         //                         //           .foundUsers[index]["Site Head"],
-                      //         //                         //       style: TextStyle(
-                      //         //                         //           fontSize: 15,
-                      //         //                         //           color: Colors.black,
-                      //         //                         //           fontWeight: FontWeight.normal),
-                      //         //                         //     ),
-                      //         //                         //   ],
-                      //         //                         // ),
-                      //         //                         // Row(
-                      //         //                         //   children: [
-                      //         //                         //     Text(
-                      //         //                         //       userListSiteHeaderController
-                      //         //                         //           .foundUsers[index]["Report User"],
-                      //         //                         //       style: TextStyle(
-                      //         //                         //           fontSize: 15,
-                      //         //                         //           color: Colors.black,
-                      //         //                         //           fontWeight: FontWeight.normal),
-                      //         //                         //     ),
-                      //         //                         //     SizedBox(
-                      //         //                         //       width: 10,
-                      //         //                         //     ),
-                      //         //                         //   ],
-                      //         //                         // ),
-                      //         //                         Divider()
-                      //         //                       ],
-                      //         //                     ),
-                      //         //                   ),
-                      //         //                 );
-                      //         //               },
-                      //         //             ))
-                      //         //           : const Text(
-                      //         //               'No results found Please try with diffrent search',
-                      //         //               style: TextStyle(fontSize: 24),
-                      //         //             ),
-                      //         //     ],
-                      //         //   ),
-                      //         // ),
-                      //       }),
-                      // ),
-                    }))
-
             // Expanded(
             //   child: FutureBuilder<List<Hospital>>(
             //     future: addSiteHeadController.fetchHospitals(),
@@ -421,6 +114,9 @@ class _AddsiteheaderuserState extends State<Addsiteheaderuser> {
             //             Hospital hospital = hospitals[index];
             //
             //             return ListTile(
+            //               leading: CircleAvatar(
+            //                 backgroundImage: AssetImage('assets/images/1.png'),
+            //               ),
             //               title: Text("${hospital.firstName}"),
             //               subtitle: Text("${hospital.lastName}"),
             //             );
@@ -430,9 +126,148 @@ class _AddsiteheaderuserState extends State<Addsiteheaderuser> {
             //     },
             //   ),
             // )
+            Expanded(
+              child: FutureBuilder<List<Hospital>>(
+                  future: addSiteHeadController.fetchHospitals(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                          child: CircularProgressIndicator()); // Loading state
+                    } else if (snapshot.hasError) {
+                      return Center(
+                          child:
+                              Text("Error: ${snapshot.error}")); // Error state
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(
+                          child: Text("No hospitals found")); // No data state
+                    } else {
+                      List<Hospital> hospitals = snapshot.data!;
+
+                      return ListView.builder(
+                        itemCount: hospitals.length,
+                        itemBuilder: (context, index) {
+                          Hospital hosptal = hospitals[index];
+
+                          return ListTile(
+                            leading: CircleAvatar(
+                              radius: 30,
+                              backgroundImage: AssetImage(
+                                "assets/images/boy.png",
+                              ),
+                            ),
+
+                            // Image.asset(
+                            //   _foundUsers[index]["image"],
+                            //   fit: BoxFit.fill,
+                            //   width: 90,
+                            //   height: 100,
+                            // ),
+                            // Image.asset("assets/images/2.png",
+                            //     width: 50, height: 50, fit: BoxFit.cover),
+                            //Image.network("YOUR_IMAGE_BASE_URL/${hospital.image}",
+
+                            title: Text(
+                                "${hosptal.firstName} ${hosptal.lastName}"),
+                            subtitle: Text("${hosptal.field}"
+                                "\n${hosptal.fieldSiteName}"),
+                            isThreeLine: true,
+                            trailing: Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 13),
+                              child: PopupMenuButton<SampleItem>(
+                                initialValue: selectedItem,
+                                onSelected: (SampleItem item) {
+                                  setState(() {
+                                    selectedItem = item;
+                                  });
+                                },
+                                itemBuilder: (BuildContext context) =>
+                                    <PopupMenuEntry<SampleItem>>[
+                                  PopupMenuItem<SampleItem>(
+                                    value: SampleItem.itemOne,
+                                    child: Row(
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              // userListSiteHeaderController
+                                              //     .editItem(index, context);
+                                              // showAlertDialog(context);
+                                            },
+                                            child: Text(
+                                              "Edit",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                  PopupMenuItem<SampleItem>(
+                                    value: SampleItem.itemTwo,
+                                    child: Row(
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                hospitals.removeAt(index);
+                                              });
+                                            },
+                                            child: Text(
+                                              "Remove",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                  PopupMenuItem<SampleItem>(
+                                    value: SampleItem.itemTwo,
+                                    child: Row(
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              setState(() {});
+                                            },
+                                            child: Text(
+                                              "Disable",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
+            ),
           ],
         ),
       ),
+      // addSiteHeadController.products.isEmpty
+      //     ? Center(
+      //         child:
+      //             CircularProgressIndicator()) // Show loading until data is available
+      //     : ListView.builder(
+      //         itemCount: addSiteHeadController.products.length,
+      //         itemBuilder: (context, index) {
+      //           return ListTile(
+      //               title: Text(addSiteHeadController
+      //                   .products[index].firstName
+      //                   .toString()));
+      //         },
+      //       ),
     );
   }
 }

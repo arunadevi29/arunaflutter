@@ -1,9 +1,11 @@
+import 'package:attendanceapp/CommenFiles/getXcontroller.dart';
 import 'package:attendanceapp/Screens/SiteHeadDashboard/view/SiteheadDashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../CommenFiles/translateService.dart';
 import '../../Admin/AdminDashboard/view/Admin_Dashboard_Screen.dart';
 import '../../LoginScreen/view/LoginScreen.dart';
 
@@ -36,10 +38,39 @@ class _SettingsscreenState extends State<Settingsscreen> {
             // );
           },
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton(
+                underline: SizedBox(),
+                icon: Icon(
+                  Icons.language,
+                  color: Colors.white,
+                  size: 35,
+                ),
+                items: const [
+                  DropdownMenuItem(
+                      value: "en",
+                      child: Text(
+                        'English',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )),
+                  DropdownMenuItem(
+                      value: "ka",
+                      child: Text(
+                        'Kannada',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ))
+                ],
+                onChanged: (value) {
+                  controller.setLocale(value);
+                }),
+          )
+        ],
         //IconButton
 
         title: Text(
-          "Settings",
+          TranslationService.translate('Settings'),
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
         ),
@@ -58,25 +89,23 @@ class _SettingsscreenState extends State<Settingsscreen> {
                 SizedBox(
                   height: 30,
                 ),
-                InkWell(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.language,
-                          size: 35,
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Text(
-                          "Language",
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                        ),
-                      ],
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.language,
+                        size: 35,
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Text(
+                        TranslationService.translate('Language'),
+                        // "Language",
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -87,7 +116,8 @@ class _SettingsscreenState extends State<Settingsscreen> {
                   child: Row(
                     children: [
                       Text(
-                        "English",
+                        TranslationService.translate('English'),
+                        // "English",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ],
@@ -112,7 +142,8 @@ class _SettingsscreenState extends State<Settingsscreen> {
                         ),
                         TextButton(
                           child: Text(
-                            'Logout',
+                            TranslationService.translate('Logout'),
+                            //'Logout',
                             style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                           onPressed: !isLoggedIn ? null : () => Loginscreen(),

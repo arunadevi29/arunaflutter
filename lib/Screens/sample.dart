@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:attendanceapp/demo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -31,6 +32,126 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter/material.dart';
+
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+// Controller for managing products
+// class ProductController extends GetxController {
+//   RxList<Hospital> hospitals = RxList<Hospital>();
+//   var isLoading = true.obs;
+//   var errorMessage = ''.obs;
+//
+//   // Fetch data asynchronously
+//   Future<void> fetchProducts() async {
+//     try {
+//       await Future.delayed(Duration(seconds: 2)); // Simulate API call
+//       hospitals.value = [];
+//       isLoading.value = false;
+//       var data = ["City Hospital", "General Hospital"];
+//       hospitals.value = data
+//           .map((name) => Hospital(
+//               id: 1,
+//               firstName: '',
+//               lastName: '',
+//               mobileNumber: '',
+//               fieldSiteName: ''))
+//           .toList()
+//           .obs;
+//     } catch (e) {
+//       errorMessage.value = "Failed to fetch products";
+//       isLoading.value = false;
+//     }
+//   }
+//
+//   @override
+//   void onInit() {
+//     fetchProducts(); // Automatically fetch data on controller initialization
+//     super.onInit();
+//   }
+// }
+//
+// class FutureObxListViewExample extends StatelessWidget {
+//   final ProductController controller = Get.put(ProductController());
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("FutureBuilder + Obx ListView")),
+//       body: Obx(() {
+//         if (controller.isLoading.value) {
+//           return Center(child: CircularProgressIndicator()); // Show loading
+//         } else if (controller.errorMessage.isNotEmpty) {
+//           return Center(
+//               child: Text(controller.errorMessage.value)); // Show error
+//         } else if (controller.hospitals.isEmpty) {
+//           return Center(
+//               child: Text("No products available")); // Show empty state
+//         }
+//
+//         // Show ListView when data is available
+//         return ListView.builder(
+//           itemCount: controller.hospitals.length,
+//           itemBuilder: (context, index) {
+//             return ListTile(
+//               leading: Icon(Icons.shopping_bag),
+//               title: Text(controller.hospitals[index].firstName),
+//             );
+//           },
+//         );
+//       }),
+//     );
+//   }
+// }
+
+// void main() {
+//   runApp(GetMaterialApp(
+//     home: FutureObxListViewExample(),
+//   ));
+// }
+
+class sitehead {
+  int id;
+  String firstName;
+  String lastName;
+  String mobileNumber;
+  String field;
+  String fieldSiteName;
+  String password;
+  String confirmPassword;
+  String image;
+
+  sitehead({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.mobileNumber,
+    required this.field,
+    required this.fieldSiteName,
+    required this.password,
+    required this.confirmPassword,
+    required this.image,
+  });
+
+  // Convert JSON to Object
+  factory sitehead.fromJson(Map<String, dynamic> json) {
+    return sitehead(
+      id: json['Id'],
+      firstName: json['FirstName'],
+      lastName: json['LastName'],
+      mobileNumber: json['MobileNumber'],
+      field: json['Field'],
+      fieldSiteName: json['FieldSiteName'],
+      password: json['Password'],
+      confirmPassword: json['ConfirmPassword'],
+      image: json['Image'],
+    );
+  }
+}
 
 class UserListScreen extends StatefulWidget {
   @override
@@ -38,87 +159,159 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-  List<User> users = []; // List to store users
-  List<Map<String, User>> dataList = [];
+  List<sitehead> users = [];
 
   @override
   void initState() {
     super.initState();
-    fetchUsers(); // Fetch data when the screen loads
+    loadUsers();
   }
 
-  Future<void> fetchUsers() async {
-    String url =
-        "https://mobileappapi.onrender.com/api/sitehead/all"; // Replace with your API
-
-    try {
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        List<dynamic> jsonData = jsonDecode(response.body); // Decode JSON
-        setState(() {
-          users = jsonData
-              .map((e) => User.fromJson(e))
-              .toList(); // Convert JSON to List<User>
-        });
-      } else {
-        print("Error: ${response.statusCode}");
+  void loadUsers() {
+    String jsonData = '''
+    [
+      {
+          "Id": 3,
+          "FirstName": "siva",
+          "LastName": "kumar",
+          "MobileNumber": "1234567890",
+          "Field": "Hospital",
+          "FieldSiteName": "JIPMER",
+          "Password": "1234",
+          "ConfirmPassword": "1234",
+          "Image": "img1.jpg"
       }
-    } catch (e) {
-      print("Request failed: $e");
-    }
-  }
+    ]
+    ''';
 
-  List<Map<String, User>> userList = [];
-
-  Future<void> fetchUser() async {
-    String url =
-        "https://mobileappapi.onrender.com/api/sitehead/all"; // Replace with your API
-
-    try {
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        List<dynamic> jsonData = jsonDecode(response.body); // Decode JSON
-
-        setState(() {
-          userList = jsonData.map<Map<String, User>>((item) {
-            String key = item.keys.first; // Get the first key (e.g., "user1")
-            return {
-              key: User.fromJson(item[key])
-            }; // Convert value to User object
-          }).toList();
-        });
-      } else {
-        print("Error: ${response.statusCode}");
-      }
-    } catch (e) {
-      print("Request failed: $e");
-    }
+    List<dynamic> parsedList = jsonDecode(jsonData);
+    setState(() {
+      users = parsedList.map((json) => sitehead.fromJson(json)).toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("User List")),
-      body: ListView.builder(
-        itemCount: userList.length,
+      body: users.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+        itemCount: users.length,
         itemBuilder: (context, index) {
-          var entry = userList[index].entries.first; // Get key-value pair
-          String key = entry.key;
-          User user = entry.value;
-
-          return ListTile(
-            leading: CircleAvatar(child: Text(user.firstName)),
-            title: Text(user.fieldSiteName),
-            subtitle: Text(user.field),
-            trailing: Text(key), // Show key (e.g., "user1")
+          sitehead user = users[index];
+          return Card(
+            child: ListTile(
+              // leading: CircleAvatar(
+              //   backgroundImage:
+              //       AssetImage("assets/2.png}"), // Load image from assets
+              // ),
+              title: Text("${user.firstName} ${user.lastName}"),
+              subtitle: Text(
+                  "Mobile: ${user.mobileNumber}\nField: ${user.field}"),
+            ),
           );
         },
       ),
     );
   }
 }
+
+// void main() {
+//   runApp(MaterialApp(home: UserListScreen()));
+// }
+//
+// void main() {
+//   runApp(MaterialApp(home: HospitalScreen()));
+// }
+//
+// class UserListScreen extends StatefulWidget {
+//   @override
+//   _UserListScreenState createState() => _UserListScreenState();
+// }
+//
+// class _UserListScreenState extends State<UserListScreen> {
+//   List<User> users = []; // List to store users
+//   List<Map<String, User>> dataList = [];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchUsers(); // Fetch data when the screen loads
+//   }
+//
+//   Future<void> fetchUsers() async {
+//     String url =
+//         "https://mobileappapi.onrender.com/api/sitehead/all"; // Replace with your API
+//
+//     try {
+//       final response = await http.get(Uri.parse(url));
+//
+//       if (response.statusCode == 200) {
+//         List<dynamic> jsonData = jsonDecode(response.body); // Decode JSON
+//         setState(() {
+//           users = jsonData
+//               .map((e) => User.fromJson(e))
+//               .toList(); // Convert JSON to List<User>
+//         });
+//       } else {
+//         print("Error: ${response.statusCode}");
+//       }
+//     } catch (e) {
+//       print("Request failed: $e");
+//     }
+//   }
+//
+//   List<Map<String, User>> userList = [];
+//
+//   Future<void> fetchUser() async {
+//     String url =
+//         "https://mobileappapi.onrender.com/api/sitehead/all"; // Replace with your API
+//
+//     try {
+//       final response = await http.get(Uri.parse(url));
+//
+//       if (response.statusCode == 200) {
+//         List<dynamic> jsonData = jsonDecode(response.body); // Decode JSON
+//
+//         setState(() {
+//           userList = jsonData.map<Map<String, User>>((item) {
+//             String key = item.keys.first; // Get the first key (e.g., "user1")
+//             return {
+//               key: User.fromJson(item[key])
+//             }; // Convert value to User object
+//           }).toList();
+//         });
+//       } else {
+//         print("Error: ${response.statusCode}");
+//       }
+//     } catch (e) {
+//       print("Request failed: $e");
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("User List")),
+//       body: ListView.builder(
+//         itemCount: userList.length,
+//         itemBuilder: (context, index) {
+//           var entry = userList[index].entries.first; // Get key-value pair
+//           String key = entry.key;
+//           User user = entry.value;
+//
+//           return ListTile(
+//             leading: CircleAvatar(child: Text(user.firstName)),
+//             title: Text(user.fieldSiteName),
+//             subtitle: Text(user.field),
+//             trailing: Text(key), // Show key (e.g., "user1")
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class User {
   final int id;
@@ -155,19 +348,6 @@ class User {
       password: json['password'],
       confirmPassword: json['confirmPassword'],
       image: json['image'],
-    );
-  }
-}
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LanguageListScreen(),
     );
   }
 }
@@ -211,16 +391,16 @@ class _LanguageListScreenState extends State<LanguageListScreen> {
       appBar: AppBar(title: Text("Languages List")),
       body: languages.isEmpty
           ? Center(
-              child: CircularProgressIndicator()) // Show loader while fetching
+          child: CircularProgressIndicator()) // Show loader while fetching
           : ListView.builder(
-              itemCount: languages.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(languages[index]['name']),
-                  subtitle: Text("Native: ${languages[index]['nativeName']}"),
-                );
-              },
-            ),
+        itemCount: languages.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(languages[index]['name']),
+            subtitle: Text("Native: ${languages[index]['nativeName']}"),
+          );
+        },
+      ),
     );
   }
 }
@@ -242,7 +422,7 @@ class _MyListViewState extends State<MyListView> {
   /// **GET Method: Fetch Data from API**
   Future<void> fetchData() async {
     final response =
-        await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+    await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -279,14 +459,14 @@ class _MyListViewState extends State<MyListView> {
       body: items.isEmpty
           ? Center(child: CircularProgressIndicator()) // Show loading indicator
           : ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(items[index]['title']),
-                  subtitle: Text(items[index]['body']),
-                );
-              },
-            ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(items[index]['title']),
+            subtitle: Text(items[index]['body']),
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: addItem,
         child: Icon(Icons.add),
@@ -304,8 +484,8 @@ class _DateTextFieldExampleState extends State<DateTextFieldExample> {
   TextEditingController fromDateController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
 
-  Future<void> _selectDate(
-      BuildContext context, TextEditingController controller) async {
+  Future<void> _selectDate(BuildContext context,
+      TextEditingController controller) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -316,7 +496,7 @@ class _DateTextFieldExampleState extends State<DateTextFieldExample> {
     if (pickedDate != null) {
       setState(() {
         controller.text =
-            "${pickedDate.toLocal()}".split(' ')[0]; // Format the date
+        "${pickedDate.toLocal()}".split(' ')[0]; // Format the date
       });
     }
   }
@@ -411,7 +591,9 @@ class _DateRangePickerExampleState extends State<DateRangePickerExample> {
             Text(
               selectedDateRange == null
                   ? "No date selected"
-                  : "From: ${selectedDateRange!.start.toString().split(' ')[0]}\nTo: ${selectedDateRange!.end.toString().split(' ')[0]}",
+                  : "From: ${selectedDateRange!.start.toString().split(
+                  ' ')[0]}\nTo: ${selectedDateRange!.end.toString().split(
+                  ' ')[0]}",
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
@@ -468,7 +650,7 @@ class _ProximityCheckScreenState extends State<ProximityCheckScreen> {
 
     // Calculate the distance between two locations
     double calculatedDistance =
-        Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
+    Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
 
     setState(() {
       distance = calculatedDistance; // Distance in meters
@@ -552,7 +734,8 @@ class _DistanceCalculatorState extends State<DistanceCalculator> {
 
     if (permission == LocationPermission.deniedForever) {
       setState(
-          () => distanceMessage = "❌ Location permission permanently denied.");
+              () =>
+          distanceMessage = "❌ Location permission permanently denied.");
       return;
     }
 
@@ -591,7 +774,7 @@ class _DistanceCalculatorState extends State<DistanceCalculator> {
           Expanded(
             child: GoogleMap(
               initialCameraPosition:
-                  CameraPosition(target: userLocation, zoom: 6),
+              CameraPosition(target: userLocation, zoom: 6),
               onMapCreated: (controller) => _mapController = controller,
               markers: {
                 Marker(
@@ -611,7 +794,7 @@ class _DistanceCalculatorState extends State<DistanceCalculator> {
               children: [
                 Text(distanceMessage,
                     style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _getCurrentLocation,
@@ -737,7 +920,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
     setState(() {
       locationMessage =
-          "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
+      "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
     });
   }
 
@@ -774,7 +957,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
   // Method to capture or pick the profile image
   Future<void> _pickProfileImage() async {
     final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
+    await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _profileImage = File(pickedFile.path);
@@ -786,7 +969,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
   Widget build(BuildContext context) {
     // Get the current date and time
     String formattedDate =
-        DateFormat('yyyy-MM-dd – hh:mm:ss a').format(DateTime.now());
+    DateFormat('yyyy-MM-dd – hh:mm:ss a').format(DateTime.now());
 
     return Scaffold(
       appBar: AppBar(

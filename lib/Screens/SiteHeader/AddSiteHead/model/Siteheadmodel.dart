@@ -51,8 +51,10 @@ import 'dart:convert';
 //       };
 // }
 
-Hospital SiteheadModelListData(String str) =>
-    Hospital.fromJson(json.decode(str));
+// Hospital SiteheadModelListData(String str) =>
+//     Hospital.fromJson(json.decode(str));
+List<Hospital> productFromJson(String str) =>
+    List<Hospital>.from(json.decode(str).map((x) => Hospital.fromJson(x)));
 
 class Hospital {
   final int? id;

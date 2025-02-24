@@ -9,13 +9,21 @@ import 'package:get_storage/get_storage.dart';
 
 import 'CommenFiles/getXcontroller.dart';
 import 'CommenFiles/router.dart';
+import 'CommenFiles/translateService.dart';
 import 'Screens/LoginScreen/Controller/LoginScreenController.dart';
 
-void main() async {
-  runApp(const MyApp());
-  await GetStorage.init();
+import 'package:flutter_localization/flutter_localization.dart';
 
-  // Get.put(LogInController());
+// void main() async {
+//   runApp(const MyApp());
+//   await GetStorage.init();
+//
+//   // Get.put(LogInController());
+// }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await TranslationService.loadLanguage('en'); // Load default language
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

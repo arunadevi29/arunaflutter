@@ -13,6 +13,8 @@ import '../../SiteHeadDashboard/view/SiteheadDashboard.dart';
 import '../../sample.dart';
 import '../Controller/LoginScreenController.dart';
 
+import 'package:flutter_localization/flutter_localization.dart';
+
 class Loginscreen extends StatefulWidget {
   Loginscreen({
     super.key,
@@ -39,14 +41,8 @@ class _LoginscreenState extends State<Loginscreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Container(
@@ -57,7 +53,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       bottomRight: Radius.circular(150.0),
                     ),
                     gradient:
-                    LinearGradient(begin: Alignment.topCenter, colors: [
+                        LinearGradient(begin: Alignment.topCenter, colors: [
                       // Colors.blue.shade900,
                       Colors.blue.shade500,
                       Colors.blue.shade400,
@@ -120,7 +116,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                     height: 50,
                                   ),
                                   TextFormField(
-                                    // obscureText: true,
+                                      // obscureText: true,
 
                                       keyboardType: TextInputType.number,
                                       maxLength: 10,
@@ -134,17 +130,17 @@ class _LoginscreenState extends State<Loginscreen> {
                                           return null;
                                       },
                                       controller:
-                                      logInController.mobileController,
+                                          logInController.mobileController,
                                       decoration: InputDecoration(
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 3,
                                               color:
-                                              Colors.blue), //<-- SEE HERE
+                                                  Colors.blue), //<-- SEE HERE
                                         ),
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10),
+                                              BorderRadius.circular(10),
 
                                           // borderSide: BorderSide.none,
                                         ),
@@ -160,7 +156,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                                   text: '*',
                                                   style: new TextStyle(
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                       color: Colors.red)),
                                             ],
                                           ),
@@ -171,14 +167,14 @@ class _LoginscreenState extends State<Loginscreen> {
                                   ),
                                   TextFormField(
                                       obscureText:
-                                      logInController.password.value,
+                                          logInController.password.value,
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return "Password is required";
                                         }
                                       },
                                       controller:
-                                      logInController.passwordController,
+                                          logInController.passwordController,
                                       decoration: InputDecoration(
                                         suffixIcon: IconButton(
                                           icon: Icon(
@@ -186,16 +182,15 @@ class _LoginscreenState extends State<Loginscreen> {
                                             logInController.password.value
                                                 ? Icons.visibility_off
                                                 : Icons.visibility,
-                                            color: Theme
-                                                .of(context)
+                                            color: Theme.of(context)
                                                 .primaryColorDark,
                                           ),
                                           onPressed: () {
                                             // Update the state i.e. toogle the state of passwordVisible variable
                                             setState(() {
                                               logInController.password.value =
-                                              !logInController
-                                                  .password.value;
+                                                  !logInController
+                                                      .password.value;
                                             });
                                           },
                                         ),
@@ -203,11 +198,11 @@ class _LoginscreenState extends State<Loginscreen> {
                                           borderSide: BorderSide(
                                               width: 3,
                                               color:
-                                              Colors.blue), //<-- SEE HERE
+                                                  Colors.blue), //<-- SEE HERE
                                         ),
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10),
+                                              BorderRadius.circular(10),
                                           // borderSide: BorderSide.none,
                                         ),
                                         label: RichText(
@@ -222,7 +217,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                                   text: ' *',
                                                   style: new TextStyle(
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                       color: Colors.red)),
                                             ],
                                           ),
@@ -234,11 +229,11 @@ class _LoginscreenState extends State<Loginscreen> {
                                   TextButton(
                                     onPressed: () {
                                       Get.toNamed("/Forgetpasswordscreen");
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                UserListScreen()),
-                                      );
+                                      // Navigator.of(context).push(
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) =>
+                                      //           FutureObxListViewExample()),
+                                      // );
                                     },
                                     child: Text(
                                       "Forgot Password?",

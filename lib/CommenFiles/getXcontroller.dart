@@ -34,6 +34,7 @@ import '../Screens/UserListAddReport/controller/UserListAddReportController.dart
 import '../Screens/UserListAddSiteHeader/controller/UserListSiteHeaderController.dart';
 import '../Screens/UserScreen/Controller/UserScreenController.dart';
 import '../Screens/Work/controller/WorkScreenController.dart';
+import 'controller.dart';
 
 class HomeBinding extends Bindings {
   @override
@@ -68,6 +69,7 @@ class HomeBinding extends Bindings {
     Get.lazyPut(() => WorkScreenController());
     Get.lazyPut(() => ShifttimeformController());
     Get.lazyPut(() => SiteheadUserController());
+    Get.lazyPut(() => Controller());
   }
 }
 
@@ -85,7 +87,7 @@ final WorkerListController workerListController = Get.find();
 final WorkerDetailsController workerDetailsController = Get.find();
 final UserCardController userCardController = Get.find();
 final UserListAddContractorController userListAddContractorController =
-    Get.find();
+Get.find();
 final UserListAddReportController userListAddReportController = Get.find();
 final UserListSiteHeaderController userListSiteHeaderController = Get.find();
 final UserScreenController userScreenController = Get.find();
@@ -95,12 +97,13 @@ final AddSiteHeadController addSiteHeadController = Get.find();
 final AddSiteWorkerController addSiteWorkerController = Get.find();
 final AddUserScreenController addUserScreenController = Get.find();
 final FacilityAddListItemsController facilityAddListItemsController =
-    Get.find();
+Get.find();
 final FacilityCardListviewController facilityCardListviewController =
-    Get.find();
+Get.find();
 final FacilityCardDetailsController facilityCardDetailsController = Get.find();
 final ContractorAddWorkerController contractorAddWorkerController = Get.find();
 final AddWorkTypeController addWorkTypeController = Get.find();
 final WorkScreenController workScreenController = Get.find();
 final ShifttimeformController shifttimeformController = Get.find();
 final SiteheadUserController siteheadUserController = Get.find();
+final Controller controller = Get.find();

@@ -1,6 +1,7 @@
 import 'package:attendanceapp/CommenFiles/getXcontroller.dart';
 import 'package:attendanceapp/Screens/SiteHeader/AddSiteHead/controller/AddSiteHeadController.dart';
 import 'package:attendanceapp/Screens/SiteHeader/AddSiteHead/model/Siteheadmodel.dart';
+import 'package:attendanceapp/Screens/UserListAddSiteHeader/controller/UserListSiteHeaderController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -546,7 +547,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             ),
             onPressed: () {
               if (_Sitehigeglobalkey.currentState!.validate()) {
-                addSiteHeadController.fetchHospitals();
+                addSiteHeadController.addItem();
                 // if (addSiteHeadController.FirstNameController.text.isNotEmpty &&
                 //     addSiteHeadController.LastNameController.text.isNotEmpty &&
                 //     addSiteHeadController
@@ -559,19 +560,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
                 //     addSiteHeadController
                 //         .ConfirmPasswordController.text.isNotEmpty &&
                 //     addSiteHeadController.images.isNotEmpty) {
-                //   addSiteHeadController.addUser(
-                //       addSiteHeadController.FirstNameController.text,
-                //       addSiteHeadController.LastNameController.text,
-                //       addSiteHeadController
-                //           .MobileNumberController.text.isNotEmpty,
-                //       addSiteHeadController.FieldController.text.isNotEmpty,
-                //       addSiteHeadController
-                //           .FieldSiteNamerController.text.isNotEmpty,
-                //       addSiteHeadController
-                //           .EnterPasswordController.text.isNotEmpty,
-                //       addSiteHeadController
-                //           .ConfirmPasswordController.text.isNotEmpty,
-                //       addSiteHeadController.images.isNotEmpty);
+                //   addSiteHeadController.addItem();
 
                 Get.toNamed('/Addsiteheaderuser');
               }

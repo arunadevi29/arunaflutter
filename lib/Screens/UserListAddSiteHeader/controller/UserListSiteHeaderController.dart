@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../CommenFiles/getXcontroller.dart';
 import '../../Admin/FacilityCardDetails/view/Facilities_Screen.dart';
+import '../model/SiteHeadListModel.dart';
 
 class UserListSiteHeaderController extends GetxController {
   TextEditingController HospitalNameController = TextEditingController();
@@ -18,66 +19,27 @@ class UserListSiteHeaderController extends GetxController {
   List<Reportsmodel> reportsmodel = List.empty(growable: true);
   TextEditingController _controller = TextEditingController();
 
-  List<Hospital> hospitals = [];
   Rx<List<Map<String, Hospital>>> foundPlayers =
       Rx<List<Map<String, Hospital>>>([]);
 
-  Future<void> fetchData() async {
-    final response = await http
-        .get(Uri.parse('https://mobileappapi.onrender.com/api/sitehead/all'));
-
-    if (response.statusCode == 200) {
-      hospitals = jsonDecode(response.body);
-    } else {
-      print("Failed to fetch data");
-    }
-  }
-
-  // Future<List<Hospital>> fetchHospitals() async {
-  //   print('object');
-  //   final response = await http
-  //       .get(Uri.parse('https://mobileappapi.onrender.com/api/sitehead/all'));
-  //
-  //   if (response.statusCode == 200) {
-  //     print('object1');
-  //     Map<String, dynamic> jsonData = jsonDecode(response.body);
-  //     List<dynamic> hospitalList = jsonData["Hospital"]; // Extract List
-  //     hospitals = jsonDecode(response.body);
-  //     return hospitalList.map((json) => Hospital.fromJson(json)).toList();
-  //   } else {
-  //     print('object1');
-  //     throw Exception("Failed to load hospital data");
-  //   }
-  // }
+// Future<List<Hospital>> fetchHospitals() async {
+//   print('object');
+//   final response = await http
+//       .get(Uri.parse('https://mobileappapi.onrender.com/api/sitehead/all'));
+//
+//   if (response.statusCode == 200) {
+//     print('object1');
+//     Map<String, dynamic> jsonData = jsonDecode(response.body);
+//     List<dynamic> hospitalList = jsonData["Hospital"]; // Extract List
+//     hospitals = jsonDecode(response.body);
+//     return hospitalList.map((json) => Hospital.fromJson(json)).toList();
+//   } else {
+//     print('object1');
+//     throw Exception("Failed to load hospital data");
+//   }
+// }
 
   /// **POST Method: Add New Item**
-  Future<void> addItem() async {
-    print('sdfsdfsa');
-    final response = await http.post(
-      Uri.parse('https://mobileappapi.onrender.com/api/sitehead/create'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        "FirstName": addSiteHeadController.FirstNameController.text,
-        "LastName": addSiteHeadController.LastNameController.text,
-        "MobileNumber": addSiteHeadController.MobileNumberController.text,
-        "Field": addSiteHeadController.FieldController.text,
-        "FieldSiteName": addSiteHeadController.FieldSiteNamerController.text,
-        "Password": addSiteHeadController.EnterPasswordController.text,
-        "ConfirmPassword": addSiteHeadController.ConfirmPasswordController.text,
-        "Image": addSiteHeadController.images.value.toString()
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // Extract List
-      hospitals = jsonDecode(response.body);
-
-      print('Success! Data added: ${response.body}');
-    } else {
-      print('Failed with status code: ${response.statusCode}');
-      print('Response: ${response.body}');
-    }
-  }
 
 // @override
 // void onInit() {

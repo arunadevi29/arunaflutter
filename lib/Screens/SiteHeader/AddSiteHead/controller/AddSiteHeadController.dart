@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../../CommenFiles/functions.dart';
 import '../../../../CommenFiles/getXcontroller.dart';
 import '../../../Admin/FacilityDetails/View/FacilityDetails.dart';
+import '../../../UserListAddSiteHeader/model/SiteHeadListModel.dart';
 import '../model/SinglehospitalModel.dart';
 import '../model/Siteheadmodel.dart';
 
@@ -30,50 +31,90 @@ class AddSiteHeadController extends GetxController {
   RxBool loader = false.obs;
   RxBool refreshLoader = false.obs;
   List<Map<String, dynamic>> items = [];
+  var errorMessage = ''.obs;
 
   // Position? position;
-  bool? isLoading;
-  var Hospitallistdata = Hospital();
-  var users = <User>[].obs;
 
-  var siteheadmodeldata = User().obs;
+  var Hospitallistdata = Hospital().obs;
+  var products = <Hospital>[];
 
+  var isLoading = true.obs;
 
   ////postmethodapi//////
 
-  Future<void> addUser(firstname, lastname, field, fieldsitename, mobileno,
-      password, confirmpassword, image) async {
-    String url =
-        "https://mobileappapi.onrender.com/api/sitehead/create"; // Replace with actual API
+  // Future<void> addUser(firstname, lastname, field, fieldsitename, mobileno,
+  //     password, confirmpassword, image) async {
+  //   String url =
+  //       "https://mobileappapi.onrender.com/api/sitehead/create"; // Replace with actual API
+  //
+  //   User newUser = User(
+  //       id: users.length + 1,
+  //       firstName: firstname,
+  //       lastName: lastname,
+  //       field: field,
+  //       fieldSiteName: fieldsitename,
+  //       mobileNumber: mobileno,
+  //       password: password,
+  //       confirmPassword: confirmpassword,
+  //       image: image);
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse(url),
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode(newUser),
+  //     );
+  //
+  //     if (response.statusCode == 201) {
+  //       users.add(newUser); // Update UI dynamically
+  //     } else {
+  //       print("Failed to add user: ${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     print("Request failed: $e");
+  //   }
+  // }
 
-    User newUser = User(
-        id: users.length + 1,
-        firstName: firstname,
-        lastName: lastname,
-        field: field,
-        fieldSiteName: fieldsitename,
-        mobileNumber: mobileno,
-        password: password,
-        confirmPassword: confirmpassword,
-        image: image);
+/////getmethodapi/////
+//////postmethod//////
+
+  Future<void> addItem() async {
+    String url =
+        "https://mobileappapi.onrender.com/api/sitehead/create"; // Replace with your API endpoint
+
     try {
-      final response = await http.post(
+      var response = await http.post(
         Uri.parse(url),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(newUser),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "FirstName": FirstNameController.text,
+          "LastName": LastNameController.text,
+          "MobileNumber": MobileNumberController.text,
+          "Field": FieldController.text,
+          "FieldSiteName": FieldSiteNamerController.text,
+          "Password": EnterPasswordController.text,
+          "ConfirmPassword": ConfirmPasswordController.text,
+          "Image": "img1.jpg".toString()
+        }), // Convert object to JSON string
       );
 
-      if (response.statusCode == 201) {
-        users.add(newUser); // Update UI dynamically
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        // var jsonDatas = jsonDecode(response.body);
+        // products.add(jsonDatas);
+
+        fetchHospitals();
+
+        print("Item added successfully!");
       } else {
-        print("Failed to add user: ${response.statusCode}");
+        print("Failed to add item: ${response.body}");
       }
     } catch (e) {
-      print("Request failed: $e");
+      print("Error: $e");
     }
   }
 
-/////getmethodapi/////
+  ////getmethod/////////
   Future<List<Hospital>> fetchHospitals() async {
     print('object');
     final response = await http
@@ -82,53 +123,15 @@ class AddSiteHeadController extends GetxController {
     if (response.statusCode == 200) {
       print('object1');
       Map<String, dynamic> jsonData = jsonDecode(response.body);
-      List<dynamic> hospitalList = jsonData["Hospital"]; // Extract List
+      List<dynamic> Hospitallistdata = jsonData["Hospital"]; // Extract List
 
-      //var jsonDatas = jsonDecode(response.body);
-      //dataList.add(jsonDatas);
-      return hospitalList.map((json) => Hospital.fromJson(json)).toList();
+      return Hospitallistdata.map((json) => Hospital.fromJson(json)).toList();
     } else {
       print('object2');
       throw Exception("Failed to load hospital data");
     }
   }
 
-  List<Map<String, Hospital>> dataList = [];
-
-// Future<void> addItem() async {
-//   String url =
-//       "https://mobileappapi.onrender.com/api/sitehead/create"; // Replace with your API endpoint
-//
-//   try {
-//     var response = await http.post(
-//       Uri.parse(url),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: jsonEncode({
-//         "FirstName": FirstNameController.text,
-//         "LastName": LastNameController.text,
-//         "MobileNumber": MobileNumberController.text,
-//         "Field": FieldController.text,
-//         "FieldSiteName": FieldSiteNamerController.text,
-//         "Password": EnterPasswordController.text,
-//         "ConfirmPassword": ConfirmPasswordController.text,
-//         "Image": "img1.jpg".toString()
-//       }), // Convert object to JSON string
-//     );
-//
-//     if (response.statusCode == 201 || response.statusCode == 200) {
-//       var jsonDatas = jsonDecode(response.body);
-//       dataList.add(jsonDatas);
-//       print("Item added successfully!");
-//     } else {
-//       print("Failed to add item: ${response.body}");
-//     }
-//   } catch (e) {
-//     print("Error: $e");
-//   }
-// }
-//
 // Future<User?> fetchSingleSite() async {
 //   String url =
 //       "https://mobileappapi.onrender.com/api/sitehead/3"; // Replace with your API URL
