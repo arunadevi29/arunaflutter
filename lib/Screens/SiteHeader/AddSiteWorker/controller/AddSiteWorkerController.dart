@@ -1,3 +1,4 @@
+import 'package:attendanceapp/CommenFiles/getXcontroller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -19,15 +20,18 @@ class AddSiteWorkerController extends GetxController {
   String work = worktypedrop.first;
   var dropname = "";
   bool passwordVisible = false;
-
+  List<List<String>> dropdownOptions = [
+    ["Option 1", "Option 2", "Option 3"],
+    ["Apple", "Banana", "Mango"],
+    ["Red", "Green", "Blue"]
+  ];
+  List<String> dropdownValues = [];
   var timepicker = "";
   String lat = "";
   String long = "";
 
   // Position? position;
-  bool? isLoading;
+  bool isLoading = false;
 
 // Fetch data from API
-
-
 }

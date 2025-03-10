@@ -1,3 +1,4 @@
+import 'package:attendanceapp/CommenFiles/getXcontroller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,110 +12,48 @@ class UserListAddContractorController extends GetxController {
   TextEditingController reportNameController = TextEditingController();
   List<Reportsmodel> reportsmodel = List.empty(growable: true);
   TextEditingController _controller = TextEditingController();
+  Set<int> disabledItems = {};
 
-  void editItem(int index, context) {
-    HospitalNameController.text = foundUsers[index]['name'];
+  void editcontractor(BuildContext context, int id, String firstName,
+      String lastName, String mobileNumber, String? image) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          'Edit Item',
-          style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-        content: TextField(
-          controller: HospitalNameController,
-          decoration: InputDecoration(
-            label: const Text(
-              "Hospital",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              // borderSide: BorderSide.none,
-            ),
-            fillColor: Color(0xfff5f7fa).withOpacity(0.1),
-            // fillColor: Colors.white54,
-            filled: true,
-            // prefixIcon: const Icon(Icons.person),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Edit Contractor"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                  controller: addContractorController.FirstNameController,
+                  decoration: InputDecoration(labelText: "First Name")),
+              TextField(
+                  controller: addContractorController.LastNameController,
+                  decoration: InputDecoration(labelText: "Last Name")),
+              TextField(
+                  controller: addContractorController.MobileNumberController,
+                  decoration: InputDecoration(labelText: "Mobile Number")),
+            ],
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Cancel',
-              style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text("Cancel"),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              foundUsers[index]['name'] = HospitalNameController.text;
-
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Save',
-              style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500),
+            ElevatedButton(
+              onPressed: () {
+                addContractorController.ContractorUpdateapi(id);
+                // facilityUpdateapi(
+                //     nameController.text, imageController.text, id);
+                Navigator.pop(context); // Close the dialog after updating
+              },
+              child: Text("Update"),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
-
-  String text = '';
-  final List<Map<String, dynamic>> allUsers = [
-    {
-      "id": 1,
-      "image": "assets/images/men_img.png",
-      "name": "Ram M",
-      "des": "Site A",
-      // "Site Head": "Security",
-      // "Report User": "Shift - 1"
-    },
-    {
-      "id": 2,
-      "image": "assets/images/men_img.png",
-      "name": "Raja R", "des": "Site A",
-      // "des": "Site A; 12.9385265  |   77.707028 ",
-      // "Site Head": "Security",
-      // "Report User": "Shift - 1"
-    },
-    {
-      "id": 3,
-      "image": "assets/images/2.png",
-      "name": "Mani R", "des": "Site A",
-      // "des": "Site A; 12.9385265  |   77.707028 ",
-      // "Site Head": "Security",
-      // "Report User": "Shift - 1"
-    },
-    {
-      "id": 4,
-      "image": "assets/images/men_img.png",
-      "name": "Velu R", "des": "Site A",
-      // "des": "Site A; 12.9385265  |   77.707028 ",
-      // "Site Head": "Security",
-      // "Report User": "Shift - 1"
-    },
-    {
-      "id": 5,
-      "image": "assets/images/1.png",
-      "name": "Ravi R", "des": "Site A",
-      // "des": "Site A; 12.9385265  |   77.707028 ",
-      // "Site Head": "Security",
-      // "Report User": "Shift - 1"
-    },
-  ];
-
-  List<Map<String, dynamic>> foundUsers = [];
 }

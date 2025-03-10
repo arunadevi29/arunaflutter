@@ -31,8 +31,8 @@ class _SettingsscreenState extends State<Settingsscreen> {
           ),
           //tooltip: 'Setting Icon',
           onPressed: () {
-            //Get.toNamed('/Admindashboard');
-            Get.toNamed('/Siteheaddashboard');
+            Get.toNamed('/Admindashboard');
+            // Get.toNamed('/Siteheaddashboard');
             // Navigator.of(context).push(
             //   MaterialPageRoute(builder: (context) => Admin_Dashboard()),
             // );

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:attendanceapp/Screens/Admin/FacilityCardListview/model/fieldstatemodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,6 +14,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../CommenFiles/getXcontroller.dart';
+import '../../../../CommenFiles/translateService.dart';
+import '../../AddNewFieldScreen/view/AddNewFieldList.dart';
 import '../../FacilityCardListview/view/Facilities_Card_Items.dart';
 import '../../FacilityDetails/View/FacilityDetails.dart';
 import '../controller/FacilityAddListItemsController.dart';
@@ -37,12 +40,6 @@ class FacilityAddListItems extends StatefulWidget {
 
 class _FacilityAddListItemsState extends State<FacilityAddListItems> {
   final _addlistglobalkey = GlobalKey<FormState>();
-  TextEditingController FieldSiteNameController = TextEditingController();
-  TextEditingController ProximityController = TextEditingController();
-  TextEditingController SiteHeadNameController = TextEditingController();
-  TextEditingController LatitudeController = TextEditingController();
-  TextEditingController LongitudeController = TextEditingController();
-  TextEditingController MobileNumberController = TextEditingController();
 
   var dropname = "";
   String? _dateTime;
@@ -115,6 +112,7 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
     super.initState();
     facilityAddListItemsController.checkPermission();
     facilityAddListItemsController.getCurrentLocation();
+    // facilityAddListItemsController.CategeryController.text = "";
   }
 
   @override
@@ -122,47 +120,51 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Add Hospital",
+            TranslationService.translate("Add Hospital"),
+            // "Add Hospital",
             style: TextStyle(fontSize: 20),
           ),
-          // actions: <Widget>[
-          //   PopupMenuButton<SampleItem>(
-          //     initialValue: selectedItem,
-          //     onSelected: (SampleItem item) {
-          //       setState(() {
-          //         selectedItem = item;
-          //       });
-          //     },
-          //     itemBuilder: (BuildContext context) =>
-          //         <PopupMenuEntry<SampleItem>>[
-          //       const PopupMenuItem<SampleItem>(
-          //         value: SampleItem.itemOne,
-          //         child: Text('Edit'),
-          //       ),
-          //       const PopupMenuItem<SampleItem>(
-          //         value: SampleItem.itemTwo,
-          //         child: Text('Disable'),
-          //       ),
-          //       // const PopupMenuItem<SampleItem>(
-          //       //   value: SampleItem.itemThree,
-          //       //   child: Text('Item 3'),
-          //       // ),
-          //     ],
-          //   ),
-          // ], //<Widget>[]
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ],
 
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios,
-              size: 20,
+              size: 25,
             ),
             //tooltip: 'Setting Icon',
             onPressed: () {
-              Get.toNamed('/FacilitiesListView');
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //       builder: (context) => FacilitiesListView(containers: [])),
-              // );
+              // Get.toNamed('/FacilitiesListView');
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => FacilitiesListView()),
+              );
             },
           ), //IconButton
         ),
@@ -189,6 +191,25 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
                       children: [
                         const SizedBox(
                           height: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: TextField(
+                              controller: facilityAddListItemsController
+                                  .CategeryController,
+                              decoration: InputDecoration(
+                                labelText: "Categery",
+                                labelStyle: TextStyle(fontSize: 18),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  // Rounded corners
+                                  borderSide:
+                                      BorderSide(color: Colors.blue, width: 2),
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                         FieldSideNameField(),
                         const SizedBox(
@@ -238,7 +259,7 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
             //   //else if (value.length < 10) {}
             // },
             keyboardType: TextInputType.name,
-            controller: FieldSiteNameController,
+            controller: facilityAddListItemsController.FieldSiteNameController,
             onChanged: (value) {
               // setState(() {
               //   // Convert the entered value to uppercase and update the controller
@@ -250,8 +271,9 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
               // });
             },
             decoration: InputDecoration(
-              label: const Text(
-                "Field Site Name",
+              label: Text(
+                TranslationService.translate('Field Site Name'),
+                // "Field Site Name",
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
               ),
@@ -280,7 +302,7 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
           ),
           Flexible(
             child: TextFormField(
-              controller: LatitudeController,
+              controller: facilityAddListItemsController.LatitudeController,
               // validator: (value) {
               //   if (value!.isEmpty) {
               //     return "Latitude can't be empty";
@@ -322,7 +344,7 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
           ),
           Flexible(
             child: TextFormField(
-              controller: LongitudeController,
+              controller: facilityAddListItemsController.LongitudeController,
               // validator: (value) {
               //   if (value!.isEmpty) {
               //     return "Longitude can't be empty";
@@ -397,16 +419,12 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
             //   //else if (value.length < 10) {}
             // },
             keyboardType: TextInputType.name,
-            controller: ProximityController,
+            controller: facilityAddListItemsController.ProximityController,
             onChanged: (value) {},
             decoration: InputDecoration(
               labelText:
                   "Distance: ${facilityAddListItemsController.distance.toStringAsFixed(2)} meters",
-              // label: const Text(
-              //   "",
-              //   style:
-              //       TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-              // ),
+
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 // borderSide: BorderSide.none,
@@ -477,56 +495,25 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
               Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Container(
-                      // decoration: ShapeDecoration(
-                      //   shape: RoundedRectangleBorder(
-                      //     side: BorderSide(width: 1.0, style: BorderStyle.solid),
-                      //     borderRadius: BorderRadius.circular(10),
-                      //   ),
-                      // ),
-                      child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                        labelText: "Site Head Name",
-                        labelStyle: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black),
-                        // prefixIcon: Padding(
-                        //   padding: const EdgeInsets.all(15.0),
-                        //   child: Image.asset(
-                        //     'assets/images/mech.png',
-                        //     color: Colors.black,
-                        //     height: 2,
-                        //     width: 2,
-                        //   ),
-                        // ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5))),
-                    value: facilityAddListItemsController.selectedOption,
-
-                    // validator: (value) {
-                    //   if (value == null || value.isEmpty) {
-                    //     return "Select Work Type can't be empty";
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
-
-                    items: facilityAddListItemsController.options
-                        .map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        facilityAddListItemsController.selectedOption =
-                            newValue!;
-                      });
-                    },
-                  ))),
+                    child: DropdownButtonFormField<String>(
+                      value: facilityCardListviewController.Siteheadname,
+                      decoration: InputDecoration(
+                          labelText: "Select Work Type",
+                          border: OutlineInputBorder()),
+                      items: facilityCardListviewController.workTypeOptions
+                          .map((String type) {
+                        return DropdownMenuItem<String>(
+                          value: type,
+                          child: Text(type),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          facilityCardListviewController.Siteheadname = value;
+                        });
+                      },
+                    ),
+                  )),
               SizedBox(height: 10),
             ]));
   }
@@ -539,11 +526,13 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Mobile Number can't be empty";
+                return TranslationService.translate(
+                    "Mobile Number can't be empty");
+                // "Mobile Number can't be empty";
               }
             },
             keyboardType: TextInputType.number,
-            controller: MobileNumberController,
+            controller: facilityAddListItemsController.MobileNumberController,
             maxLength: 10,
             onChanged: (value) {
               // setState(() {
@@ -556,9 +545,12 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
               // });
             },
             decoration: InputDecoration(
+              prefixText: "+91",
               label: RichText(
                 text: new TextSpan(
-                  text: 'Mobile Number',
+                  text: TranslationService.translate("Mobile Number"),
+                  // : ${logInController.mobileController.text}
+                  // 'Mobile Number',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -594,7 +586,8 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
           height: 60.0,
           child: ElevatedButton(
             child: Text(
-              'Submit',
+              TranslationService.translate("Submit"),
+              // 'Submit',
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -614,17 +607,13 @@ class _FacilityAddListItemsState extends State<FacilityAddListItems> {
             onPressed: () {
               // Get.toNamed('/Adminaddreportmanagerscreen');
               if (_addlistglobalkey.currentState!.validate()) {
+                // facilityCardListviewController.addFieldStateApi();
+                facilityCardListviewController.addFieldStateApi();
+
+                // Get.toNamed("/FacilitiesListView");
+
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Facilitydetails(
-                          FieldSite: FieldSiteNameController.text.toString(),
-                          // ContractorName:
-                          //     ContractorNameController.text.toString(),
-                          Latitude: LatitudeController.text.toString(),
-                          Longitude: LongitudeController.text.toString(),
-                          Proximity: ProximityController.text.toString(),
-                          SiteHead: SiteHeadNameController.text.toString(),
-                          MobileNo: MobileNumberController.text.toString(),
-                        )));
+                    builder: (context) => FacilitiesListView()));
               }
             },
           ),

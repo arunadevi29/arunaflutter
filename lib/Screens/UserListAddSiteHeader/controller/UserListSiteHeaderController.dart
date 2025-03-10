@@ -7,7 +7,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../CommenFiles/getXcontroller.dart';
+import '../../Admin/FacilityCardDetails/model/FacilitylistModel.dart';
 import '../../Admin/FacilityCardDetails/view/Facilities_Screen.dart';
+import '../../SiteHeader/AddSiteHead/model/SinglehospitalModel.dart';
 import '../model/SiteHeadListModel.dart';
 
 class UserListSiteHeaderController extends GetxController {
@@ -18,65 +20,127 @@ class UserListSiteHeaderController extends GetxController {
   TextEditingController searchController = TextEditingController();
   List<Reportsmodel> reportsmodel = List.empty(growable: true);
   TextEditingController _controller = TextEditingController();
+  bool isDisabled = false;
+  Map<String, List<SiteheadModel>> facilityData = {};
 
-  Rx<List<Map<String, Hospital>>> foundPlayers =
-      Rx<List<Map<String, Hospital>>>([]);
+  Set<int> disabledItems = {}; // Track disabled item IDs
 
-// Future<List<Hospital>> fetchHospitals() async {
-//   print('object');
-//   final response = await http
-//       .get(Uri.parse('https://mobileappapi.onrender.com/api/sitehead/all'));
+  void toggleDisableItem(int id) {
+    if (disabledItems.contains(id)) {
+      disabledItems.remove(id); // Enable the item
+    } else {
+      disabledItems.add(id); // Disable the item
+    }
+  }
+
+  void editsitehead(
+    BuildContext context,
+    int siteheadid,
+    String firstName,
+    String lastName,
+    String mobileNumber,
+    String field,
+    String fieldSiteName,
+    String? image,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Edit Sitehead"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                  controller: addSiteHeadController.FirstNameController,
+                  decoration: InputDecoration(labelText: "First Name")),
+              TextField(
+                  controller: addSiteHeadController.LastNameController,
+                  decoration: InputDecoration(labelText: "Last Name")),
+              // TextField(
+              //     maxLength: 10,
+              //     controller: addSiteHeadController.MobileNumberController,
+              //     decoration: InputDecoration(labelText: "Mobile Number")),
+              TextField(
+                  controller: addSiteHeadController.FieldController,
+                  decoration: InputDecoration(labelText: "Field")),
+              TextField(
+                  controller: addSiteHeadController.FieldSiteNamerController,
+                  decoration: InputDecoration(labelText: "Field Site Name")),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                addSiteHeadController.SiteheadUpdateapi(
+                  siteheadid,
+                );
+                // facilityUpdateapi(
+                //     nameController.text, imageController.text, id);
+                Navigator.pop(context); // Close the dialog after updating
+              },
+              child: Text("Update"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+////disable///
+
+// void editItem(context) {
+//   showDialog(
+//     context: context,
+//     builder: (context) {
+//       return AlertDialog(
+//         title: Text("Edit Sitehead"),
+//         content: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             TextField(
+//                 controller: addSiteHeadController.FirstNameController,
+//                 decoration: InputDecoration(labelText: "First Name")),
+//             TextField(
+//                 controller: addSiteHeadController.LastNameController,
+//                 decoration: InputDecoration(labelText: "Last Name")),
+//             TextField(
+//                 controller: addSiteHeadController.MobileNumberController,
+//                 decoration: InputDecoration(labelText: "Mobile Number")),
+//             TextField(
+//                 controller: addSiteHeadController.FieldController,
+//                 decoration: InputDecoration(labelText: "Field")),
+//             TextField(
+//                 controller: addSiteHeadController.FieldSiteNamerController,
+//                 decoration: InputDecoration(labelText: "Field Site Name")),
+//           ],
+//         ),
+//         actions: [
+//           TextButton(
+//             onPressed: () => Navigator.pop(context),
+//             child: Text("Cancel"),
+//           ),
+//           ElevatedButton(
+//             onPressed: () async {
+//               // int siteheadid = 5;
+//               addSiteHeadController.SiteheadUpdateapi(siteheadid);
 //
-//   if (response.statusCode == 200) {
-//     print('object1');
-//     Map<String, dynamic> jsonData = jsonDecode(response.body);
-//     List<dynamic> hospitalList = jsonData["Hospital"]; // Extract List
-//     hospitals = jsonDecode(response.body);
-//     return hospitalList.map((json) => Hospital.fromJson(json)).toList();
-//   } else {
-//     print('object1');
-//     throw Exception("Failed to load hospital data");
-//   }
+//               Navigator.pop(context);
+//             },
+//             child: Text("Save"),
+//           ),
+//         ],
+//       );
+//     },
+//   );
 // }
 
-  /// **POST Method: Add New Item**
-
-// @override
-// void onInit() {
-//   super.onInit();
-//   foundPlayers.value = allPlayers;
-// }
-//
-// @override
-// void onReady() {
-//   super.onReady();
-// }
-//
-// @override
-// void onClose() {}
-//
-// void filteredItems(String enteredKeyword) {
-//   List<Map<String, Hospital>> results = [];
-//
-//   if (enteredKeyword.isEmpty) {
-//     // if the search field is empty or only contains white-space, we'll display all users
-//     results = allPlayers;
-//   } else {
-//     results = allPlayers
-//         .where((user) => user['FirstName']
-//             .toString()
-//             .toLowerCase()
-//             .contains(enteredKeyword.toLowerCase()))
-//         .toList();
-//
-//     // we use the toLowerCase() method to make it case-insensitive
-//   }
-//
-//   // Refresh the UI
-//
-//   foundPlayers.value = results;
-// }
-//
 // void editItem(int index, context) {
 //   //HospitalNameController.text = foundUsers[index]['FirstName'];
 //   showDialog(
@@ -136,6 +200,7 @@ class UserListSiteHeaderController extends GetxController {
 //     ),
 //   );
 // }
+
 //
 // String text = '';
 // final List<Map<String, Hospital>> allUsers = [

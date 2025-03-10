@@ -14,6 +14,8 @@ import 'Screens/LoginScreen/Controller/LoginScreenController.dart';
 
 import 'package:flutter_localization/flutter_localization.dart';
 
+import 'Screens/languagechanger/controller/LanguageController.dart';
+
 // void main() async {
 //   runApp(const MyApp());
 //   await GetStorage.init();

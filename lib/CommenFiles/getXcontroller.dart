@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import '../Screens/AddUser/controller/AddUserScreenController.dart';
 
 import '../Screens/AddWorkType/controller/AddWorkTypeController.dart';
+
+import '../Screens/Admin/AddNewFacilityScreen/controller/Addnewfacilitycontroller.dart';
+import '../Screens/Admin/AddNewFieldScreen/controller/AddNewFieldcontroller.dart';
 import '../Screens/Admin/AdminDashboard/controller/AdminDashboardController.dart';
 
 import '../Screens/Admin/FacilityAddListItems/controller/FacilityAddListItemsController.dart';
@@ -34,6 +37,7 @@ import '../Screens/UserListAddReport/controller/UserListAddReportController.dart
 import '../Screens/UserListAddSiteHeader/controller/UserListSiteHeaderController.dart';
 import '../Screens/UserScreen/Controller/UserScreenController.dart';
 import '../Screens/Work/controller/WorkScreenController.dart';
+import '../Screens/languagechanger/controller/LanguageController.dart';
 import 'controller.dart';
 
 class HomeBinding extends Bindings {
@@ -70,6 +74,9 @@ class HomeBinding extends Bindings {
     Get.lazyPut(() => ShifttimeformController());
     Get.lazyPut(() => SiteheadUserController());
     Get.lazyPut(() => Controller());
+    Get.lazyPut(() => LanguageController());
+    Get.lazyPut(() => Addnewfacilitycontroller());
+    Get.lazyPut(() => AddNewFieldController());
   }
 }
 
@@ -87,7 +94,7 @@ final WorkerListController workerListController = Get.find();
 final WorkerDetailsController workerDetailsController = Get.find();
 final UserCardController userCardController = Get.find();
 final UserListAddContractorController userListAddContractorController =
-Get.find();
+    Get.find();
 final UserListAddReportController userListAddReportController = Get.find();
 final UserListSiteHeaderController userListSiteHeaderController = Get.find();
 final UserScreenController userScreenController = Get.find();
@@ -97,9 +104,9 @@ final AddSiteHeadController addSiteHeadController = Get.find();
 final AddSiteWorkerController addSiteWorkerController = Get.find();
 final AddUserScreenController addUserScreenController = Get.find();
 final FacilityAddListItemsController facilityAddListItemsController =
-Get.find();
+    Get.find();
 final FacilityCardListviewController facilityCardListviewController =
-Get.find();
+    Get.find();
 final FacilityCardDetailsController facilityCardDetailsController = Get.find();
 final ContractorAddWorkerController contractorAddWorkerController = Get.find();
 final AddWorkTypeController addWorkTypeController = Get.find();
@@ -107,3 +114,5 @@ final WorkScreenController workScreenController = Get.find();
 final ShifttimeformController shifttimeformController = Get.find();
 final SiteheadUserController siteheadUserController = Get.find();
 final Controller controller = Get.find();
+final Addnewfacilitycontroller addnewfacilitycontroller = Get.find();
+final AddNewFieldController addNewFieldController = Get.find();

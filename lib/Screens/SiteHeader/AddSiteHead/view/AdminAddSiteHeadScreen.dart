@@ -1,5 +1,7 @@
 import 'package:attendanceapp/CommenFiles/getXcontroller.dart';
+import 'package:attendanceapp/CommenFiles/translateService.dart';
 import 'package:attendanceapp/Screens/SiteHeader/AddSiteHead/controller/AddSiteHeadController.dart';
+import 'package:attendanceapp/Screens/SiteHeader/AddSiteHead/model/SinglehospitalModel.dart';
 import 'package:attendanceapp/Screens/SiteHeader/AddSiteHead/model/Siteheadmodel.dart';
 import 'package:attendanceapp/Screens/UserListAddSiteHeader/controller/UserListSiteHeaderController.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,25 +41,55 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.0), // here the desired height
-            child: AppbarName(
-              title: "Add Site Head",
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                ),
-                //tooltip: 'Setting Icon',
-                onPressed: () {
-                  Get.toNamed('/Addsiteheaderuser');
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //       builder: (context) => Addsiteheaderuser()),
-                  // );
-                },
-              ), //IconButton
-            )),
+        appBar: // here the desired height
+            AppBar(
+          title: Text(TranslationService.translate("Add Site Head")),
+
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+
+            //tooltip: 'Setting Icon',
+            onPressed: () {
+              Get.toNamed('/Addsiteheaderuser');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //       builder: (context) => Addsiteheaderuser()),
+              // );
+            },
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ], //IconButton
+        ),
         body: Column(
           children: [
             Expanded(
@@ -96,7 +128,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12),
                                 child: Text(
-                                  "Set Password",
+                                  TranslationService.translate("Set Password"),
                                   style: TextStyle(
                                       color: Color(0xff0056F1),
                                       fontWeight: FontWeight.normal,
@@ -139,7 +171,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "First Name is required";
+                return TranslationService.translate("First Name is required");
               }
 
               //else if (value.length < 10) {}
@@ -159,7 +191,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'First Name',
+                  text: TranslationService.translate('First Name'),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -195,7 +227,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Last Name is required";
+                return TranslationService.translate("Last Name is required");
               }
 
               //else if (value.length < 10) {}
@@ -215,7 +247,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Last Name',
+                  text: TranslationService.translate("Last Name"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -252,10 +284,12 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             maxLength: 10,
             validator: (value) {
               if (value!.isEmpty) {
-                return "Mobile Number is required";
+                return TranslationService.translate(
+                    "Mobile Number is required");
               }
               if (value.length != 10)
-                return 'Mobile Number must be of 10 digit';
+                return TranslationService.translate(
+                    'Mobile Number must be of 10 digit');
               else
                 return null;
 
@@ -276,7 +310,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Mobile Number',
+                  text: TranslationService.translate("Mobile Number"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -328,8 +362,8 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
               // });
             },
             decoration: InputDecoration(
-              label: const Text(
-                "Facility",
+              label: Text(
+                TranslationService.translate("Facility"),
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
               ),
@@ -372,8 +406,8 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
               // });
             },
             decoration: InputDecoration(
-              label: const Text(
-                "Field Site Name",
+              label: Text(
+                TranslationService.translate("Field Site Name"),
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
               ),
@@ -400,7 +434,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Password is required";
+                return TranslationService.translate("Password is required");
               }
             },
             keyboardType: TextInputType.name,
@@ -420,7 +454,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Password',
+                  text: TranslationService.translate("Password"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -472,7 +506,8 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Confirm Password is required";
+                return TranslationService.translate(
+                    "Confirm Password is required");
               }
               if (value != addSiteHeadController.EnterPasswordController.text)
                 return 'Not Match';
@@ -492,7 +527,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Confirm Password',
+                  text: TranslationService.translate("Confirm Password"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -528,7 +563,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
           height: 60.0,
           child: ElevatedButton(
             child: Text(
-              'Submit',
+              TranslationService.translate("Submit"),
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -547,7 +582,7 @@ class _AdminaddsiteheadscreenState extends State<Adminaddsiteheadscreen> {
             ),
             onPressed: () {
               if (_Sitehigeglobalkey.currentState!.validate()) {
-                addSiteHeadController.addItem();
+                addSiteHeadController.addPostapi();
                 // if (addSiteHeadController.FirstNameController.text.isNotEmpty &&
                 //     addSiteHeadController.LastNameController.text.isNotEmpty &&
                 //     addSiteHeadController

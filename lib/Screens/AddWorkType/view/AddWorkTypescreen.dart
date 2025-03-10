@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../CommenFiles/getXcontroller.dart';
+import '../../../CommenFiles/translateService.dart';
 import '../../Work/view/Work_Type_Screen.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
@@ -75,39 +77,43 @@ class _AddWorkTypeScreenState extends State<AddWorkTypeScreen> {
     );
   }
 
-  TextEditingController WorkTypeController = TextEditingController();
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add Work Type",
+          TranslationService.translate('Add Work Type'),
+          // "Add Work Type",
           style: TextStyle(fontSize: 20),
         ),
-        // actions: <Widget>[
-        //   PopupMenuButton<SampleItem>(
-        //     initialValue: selectedItem,
-        //     onSelected: (SampleItem item) {
-        //       setState(() {
-        //         selectedItem = item;
-        //       });
-        //     },
-        //     itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
-        //       const PopupMenuItem<SampleItem>(
-        //         value: SampleItem.itemOne,
-        //         child: Text('Edit'),
-        //       ),
-        //       const PopupMenuItem<SampleItem>(
-        //         value: SampleItem.itemTwo,
-        //         child: Text('Disable'),
-        //       ),
-        //       // const PopupMenuItem<SampleItem>(
-        //       //   value: SampleItem.itemThree,
-        //       //   child: Text('Item 3'),
-        //       // ),
-        //     ],
-        //   ),
-        // ], //<Widget>[]
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton(
+                underline: SizedBox(),
+                icon: Icon(
+                  Icons.language,
+                  color: Colors.blue,
+                  size: 35,
+                ),
+                items: const [
+                  DropdownMenuItem(
+                      value: "en",
+                      child: Text(
+                        'English',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )),
+                  DropdownMenuItem(
+                      value: "ka",
+                      child: Text(
+                        'Kannada',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )),
+                ],
+                onChanged: (value) {
+                  controller.setLocale(value);
+                }),
+          )
+        ],
 
         leading: IconButton(
           icon: const Icon(
@@ -144,13 +150,15 @@ class _AddWorkTypeScreenState extends State<AddWorkTypeScreen> {
                     //     return "Work Type can't be empty";
                     //   }
                     // },
-                    controller: WorkTypeController,
+                    controller: addWorkTypeController.WorkTypeController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         // borderSide: BorderSide.none,
                       ),
-                      labelText: "Enter Work Type",
+                      labelText:
+                          TranslationService.translate('Enter Work Type'),
+                      // "Enter Work Type",
                       labelStyle: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
@@ -168,7 +176,8 @@ class _AddWorkTypeScreenState extends State<AddWorkTypeScreen> {
                 height: 60.0,
                 child: ElevatedButton(
                   child: Text(
-                    'Submit',
+                    TranslationService.translate('Submit'),
+                    // 'Submit',
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -186,6 +195,8 @@ class _AddWorkTypeScreenState extends State<AddWorkTypeScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                   onPressed: () async {
+                    addWorkTypeController.addworkPostapi();
+                    Get.toNamed("/WorkTypeScreen");
                     // _showPicker(context: context);
                   },
                 ),
@@ -221,8 +232,8 @@ class _AddWorkTypeScreenState extends State<AddWorkTypeScreen> {
                   ),
                 ))),
         Positioned(
-          bottom: 5,
-          right: 10.0,
+          bottom: 25,
+          right: 5,
           child: InkWell(
             onTap: () {
               _showPicker(context: context);

@@ -6,6 +6,8 @@ import 'package:get/get_core/src/get_main.dart';
 // import 'package:url_launcher/url_launcher.dart';
 // import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../../CommenFiles/getXcontroller.dart';
+import '../../../../CommenFiles/translateService.dart';
 import '../../../../widgets/CameraScreen.dart';
 import '../../FacilityAddListItems/view/Facility_add_List_items.dart';
 import '../../FacilityCardListview/view/Facilities_Card_Items.dart';
@@ -41,29 +43,65 @@ class Facilitydetails extends StatelessWidget {
             "GH",
             style: TextStyle(fontSize: 20),
           ),
-          actions: <Widget>[
-            PopupMenuButton<SampleItem>(
-              initialValue: selectedItem,
-              onSelected: (SampleItem item) {
-                selectedItem = item;
-              },
-              itemBuilder: (BuildContext context) =>
-                  <PopupMenuEntry<SampleItem>>[
-                const PopupMenuItem<SampleItem>(
-                  value: SampleItem.itemOne,
-                  child: Text('Edit'),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton(
+                      underline: SizedBox(),
+                      icon: Icon(
+                        Icons.language,
+                        color: Colors.blue,
+                        size: 35,
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                            value: "en",
+                            child: Text(
+                              'English',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            )),
+                        DropdownMenuItem(
+                            value: "ka",
+                            child: Text(
+                              'Kannada',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            )),
+                      ],
+                      onChanged: (value) {
+                        controller.setLocale(value);
+                      }),
                 ),
-                const PopupMenuItem<SampleItem>(
-                  value: SampleItem.itemTwo,
-                  child: Text('Disable'),
+                PopupMenuButton<SampleItem>(
+                  initialValue: selectedItem,
+                  onSelected: (SampleItem item) {
+                    selectedItem = item;
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<SampleItem>>[
+                    PopupMenuItem<SampleItem>(
+                      value: SampleItem.itemOne,
+                      child: Text(
+                        TranslationService.translate("Edit"),
+                      ),
+                    ),
+                    PopupMenuItem<SampleItem>(
+                      value: SampleItem.itemTwo,
+                      child: Text(TranslationService.translate("Disable")),
+                    ),
+                    // const PopupMenuItem<SampleItem>(
+                    //   value: SampleItem.itemThree,
+                    //   child: Text('Item 3'),
+                    // ),
+                  ],
                 ),
-                // const PopupMenuItem<SampleItem>(
-                //   value: SampleItem.itemThree,
-                //   child: Text('Item 3'),
-                // ),
               ],
             ),
-          ], //<Widget>[]
+          ],
 
           leading: IconButton(
             icon: const Icon(
@@ -72,11 +110,10 @@ class Facilitydetails extends StatelessWidget {
             ),
             //tooltip: 'Setting Icon',
             onPressed: () {
-              Get.toNamed('/FacilityAddListItems');
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //       builder: (context) => FacilityAddListItems()),
-              // );
+              // Get.toNamed('/FacilityAddListItems');
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => FacilitiesListView()),
+              );
             },
           ), //IconButton
         ),
@@ -115,7 +152,16 @@ class Facilitydetails extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  "Field Site   :  $FieldSite",
+                                  TranslationService.translate(
+                                      "Field Site   :"),
+                                  //users[index].Name,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "  $FieldSite",
                                   //users[index].Name,
                                   style: TextStyle(
                                       fontSize: 18,
@@ -130,13 +176,22 @@ class Facilitydetails extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  "Latitude     :  $Latitude",
+                                  TranslationService.translate("Latitude  :"),
+
                                   // users[index].Work,
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500),
                                 ),
+                                Text(
+                                  "  $Latitude",
+                                  //users[index].Name,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -148,7 +203,69 @@ class Facilitydetails extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  "Longitude  :  $Longitude",
+                                  TranslationService.translate("Longitude  :"),
+
+                                  // users[index].Timing,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "  $Longitude",
+                                  //users[index].Name,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  TranslationService.translate("Proximity  :"),
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "       $Proximity",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  TranslationService.translate(
+                                    "Site Head   :",
+                                  ),
+
+                                  // users[index].Timing,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  TranslationService.translate(
+                                    " $SiteHead",
+                                  ),
+
                                   // users[index].Timing,
                                   style: TextStyle(
                                       fontSize: 18,
@@ -166,39 +283,21 @@ class Facilitydetails extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  "Proximity   :  $Proximity",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Site Head   :  $SiteHead",
+                                  TranslationService.translate(
+                                    "Mobile No. :",
+                                  ),
+
                                   // users[index].Timing,
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
                                 Text(
-                                  "Mobile No. :  $MobileNo",
+                                  TranslationService.translate(
+                                    " $MobileNo",
+                                  ),
+
                                   // users[index].Timing,
                                   style: TextStyle(
                                       fontSize: 18,

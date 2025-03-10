@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../CommenFiles/translateService.dart';
 import '../../OTPVerificationScreen/view/OTPVerificationScreen.dart';
+import '../../sample.dart';
 
 class Forgetpasswordscreen extends StatefulWidget {
   const Forgetpasswordscreen({super.key});
@@ -111,37 +113,37 @@ class _ForgetpasswordscreenState extends State<Forgetpasswordscreen> {
                                   SizedBox(
                                     height: 50,
                                   ),
-                                  TextFormField(
-                                      obscureText: true,
-                                      keyboardType: TextInputType.number,
-                                      maxLength: 10,
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: TextFormField(
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "Mobile Number can't be empty";
+                                          return TranslationService.translate(
+                                              "Enter Password can't be empty");
                                         }
-                                        if (value.length != 10)
-                                          return 'Mobile Number must be of 10 digit';
-                                        else
-                                          return null;
                                       },
+                                      keyboardType: TextInputType.number,
                                       controller: forgetpasswordcontroller
-                                          .mobileController,
+                                          .passwordController,
+                                      obscureText: !addContractorController
+                                          .passwordVisible,
+                                      //This will obscure text dynamically
+                                      onChanged: (value) {
+                                        // setState(() {
+                                        //   // Convert the entered value to uppercase and update the controller
+                                        // /  usernameController.value = TextEditingValue(
+                                        //     text: value.toUpperCase(),
+                                        //     selection: usernameController
+                                        //         .selection, // Maintain the cursor position
+                                        //   );
+                                        // });
+                                      },
                                       decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 3,
-                                              color:
-                                                  Colors.blue), //<-- SEE HERE
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-
-                                          // borderSide: BorderSide.none,
-                                        ),
                                         label: RichText(
                                           text: new TextSpan(
-                                            text: 'Mobile Number',
+                                            text: TranslationService.translate(
+                                                "Enter Password"),
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.normal,
@@ -156,7 +158,149 @@ class _ForgetpasswordscreenState extends State<Forgetpasswordscreen> {
                                             ],
                                           ),
                                         ),
-                                      )),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          // borderSide: BorderSide.none,
+                                        ),
+                                        fillColor:
+                                            Color(0xfff5f7fa).withOpacity(0.1),
+                                        // fillColor: Colors.white54,
+                                        filled: true,
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            // Based on passwordVisible state choose the icon
+                                            forgetpasswordcontroller
+                                                    .passwordVisible
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: Theme.of(context)
+                                                .primaryColorDark,
+                                          ),
+                                          onPressed: () {
+                                            // Update the state i.e. toogle the state of passwordVisible variable
+                                            setState(() {
+                                              addContractorController
+                                                      .passwordVisible =
+                                                  !addContractorController
+                                                      .passwordVisible;
+                                            });
+                                          },
+                                        ),
+                                        // prefixIcon: const Icon(Icons.person),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return TranslationService.translate(
+                                              "Confirm Password can't be empty");
+                                        }
+                                        if (value !=
+                                            forgetpasswordcontroller
+                                                .passwordController.text)
+                                          return TranslationService.translate(
+                                              "Not Match");
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      controller: addContractorController
+                                          .ConfirmPasswordController,
+                                      onChanged: (value) {
+                                        // setState(() {
+                                        //   // Convert the entered value to uppercase and update the controller
+                                        // /  usernameController.value = TextEditingValue(
+                                        //     text: value.toUpperCase(),
+                                        //     selection: usernameController
+                                        //         .selection, // Maintain the cursor position
+                                        //   );
+                                        // });
+                                      },
+                                      decoration: InputDecoration(
+                                        label: RichText(
+                                          text: new TextSpan(
+                                            text: TranslationService.translate(
+                                                "Confirm Password"),
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.normal,
+                                                color: Colors.black),
+                                            children: <TextSpan>[
+                                              new TextSpan(
+                                                  text: ' *',
+                                                  style: new TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red)),
+                                            ],
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          // borderSide: BorderSide.none,
+                                        ),
+                                        fillColor:
+                                            Color(0xfff5f7fa).withOpacity(0.1),
+                                        // fillColor: Colors.white54,
+                                        filled: true,
+                                        // prefixIcon: const Icon(Icons.person),
+                                      ),
+                                    ),
+                                  ),
+                                  // TextFormField(
+                                  //     obscureText: true,
+                                  //     keyboardType: TextInputType.number,
+                                  //     maxLength: 10,
+                                  //     validator: (value) {
+                                  //       if (value!.isEmpty) {
+                                  //         return "Mobile Number can't be empty";
+                                  //       }
+                                  //       if (value.length != 10)
+                                  //         return 'Mobile Number must be of 10 digit';
+                                  //       else
+                                  //         return null;
+                                  //     },
+                                  //     controller: forgetpasswordcontroller
+                                  //         .mobileController,
+                                  //     decoration: InputDecoration(
+                                  //       enabledBorder: OutlineInputBorder(
+                                  //         borderSide: BorderSide(
+                                  //             width: 3,
+                                  //             color:
+                                  //                 Colors.blue), //<-- SEE HERE
+                                  //       ),
+                                  //       border: OutlineInputBorder(
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(10),
+                                  //
+                                  //         // borderSide: BorderSide.none,
+                                  //       ),
+                                  //       label: RichText(
+                                  //         text: new TextSpan(
+                                  //           text: 'Mobile Number',
+                                  //           style: TextStyle(
+                                  //               fontSize: 18,
+                                  //               fontWeight: FontWeight.normal,
+                                  //               color: Colors.black),
+                                  //           children: <TextSpan>[
+                                  //             new TextSpan(
+                                  //                 text: ' *',
+                                  //                 style: new TextStyle(
+                                  //                     fontWeight:
+                                  //                         FontWeight.bold,
+                                  //                     color: Colors.red)),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //     )),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -166,11 +310,27 @@ class _ForgetpasswordscreenState extends State<Forgetpasswordscreen> {
                                   MaterialButton(
                                     onPressed: () {
                                       _forgetglobalkey.currentState?.validate();
-                                      Get.toNamed('/Otpverificationscreen');
+                                      String NewPassword =
+                                          forgetpasswordcontroller
+                                              .passwordController.text
+                                              .trim();
+                                      String ConfirmPassword =
+                                          forgetpasswordcontroller
+                                              .ConfirmPasswordController.text
+                                              .trim();
+                                      if (NewPassword.isNotEmpty &&
+                                          ConfirmPassword.isNotEmpty) {
+                                        forgetpasswordcontroller.forgotPassword(
+                                            NewPassword, ConfirmPassword);
+                                      } else {
+                                        print("Enter a valid email");
+                                      }
+
+                                      // Get.toNamed('/Otpverificationscreen');
                                       // Navigator.of(context).push(
                                       //   MaterialPageRoute(
                                       //       builder: (context) =>
-                                      //           Otpverificationscreen()),
+                                      //           UploadScreen()),
                                       // );
                                     },
                                     height: 50,
@@ -191,6 +351,7 @@ class _ForgetpasswordscreenState extends State<Forgetpasswordscreen> {
                                       ),
                                     ),
                                   ),
+
                                   SizedBox(
                                     height: 50,
                                   ),

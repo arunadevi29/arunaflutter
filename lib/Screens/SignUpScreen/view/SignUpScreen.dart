@@ -3,6 +3,8 @@ import 'package:attendanceapp/Screens/LoginScreen/view/LoginScreen.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
@@ -24,27 +26,13 @@ class _SignupscreenState extends State<Signupscreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              //     Container(
-              //       width: double.infinity,
-              //       // decoration: BoxDecoration(
-              //       //     borderRadius: BorderRadius.only(
-              //       //       bottomLeft: Radius.circular(10.0),
-              //       //       bottomRight: Radius.circular(150.0),
-              //       //     ),
-              //           gradient:
-              //               LinearGradient(begin: Alignment.topCenter, colors: [
-              //             // Colors.blue.shade900,
-              //             Colors.blue.shade500,
-              //             Colors.blue.shade400,
-              //           ])
-              // ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -71,18 +59,12 @@ class _SignupscreenState extends State<Signupscreen> {
                             //   "assets/images/human.png",
                             // ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
                           Column(
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
                               Text(
                                 "Sign Up",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.blue,
                                   fontSize: 40,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -95,177 +77,284 @@ class _SignupscreenState extends State<Signupscreen> {
                   ),
                   SizedBox(height: 10),
                   SingleChildScrollView(
-                    child: Container(
-                      // decoration: BoxDecoration(
-                      //     color: Colors.white,
-                      //     borderRadius: BorderRadius.only(
-                      //         topLeft: Radius.circular(50),
-                      //         topRight: Radius.circular(50))),
-                      child: Padding(
-                          padding: EdgeInsets.all(30),
-                          child: Form(
-                            key: _signglobalkey,
-                            child: Column(
-                              children: <Widget>[
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                TextFormField(
-                                    // obscureText: true,
-
-                                    keyboardType: TextInputType.number,
-                                    maxLength: 10,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Mobile Number is required";
-                                      }
-                                      if (value.length != 10)
-                                        return 'Mobile Number must be of 10 digit';
-                                      else
-                                        return null;
-                                    },
-                                    controller:
-                                        signUpController.mobilenumbercontroller,
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 2,
-                                            color: Colors.white), //<-- SEE HERE
-                                      ),
-                                      border: OutlineInputBorder(
-                                          // borderRadius: BorderRadius.circular(30),
-
-                                          // borderSide: BorderSide.none,
-                                          ),
-                                      label: RichText(
-                                        text: new TextSpan(
-                                          text: 'Mobile Number ',
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.white),
-                                          children: <TextSpan>[
-                                            new TextSpan(
-                                                text: '*',
-                                                style: new TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red)),
-                                          ],
-                                        ),
-                                      ),
-                                    )),
-                                SizedBox(
-                                  height: 10,
+                    child:
+                        // Padding(
+                        //   padding: EdgeInsets.all(30),
+                        //   child: Form(
+                        //     key: _signglobalkey,
+                        //     child: Column(
+                        //       children: <Widget>[
+                        //         // SizedBox(
+                        //         //   height: 10,
+                        //         // ),
+                        //         TextFormField(
+                        //             // obscureText: true,
+                        //
+                        //             keyboardType: TextInputType.number,
+                        //             maxLength: 10,
+                        //             validator: (value) {
+                        //               if (value!.isEmpty) {
+                        //                 return "Mobile Number is required";
+                        //               }
+                        //               if (value.length != 10)
+                        //                 return 'Mobile Number must be of 10 digit';
+                        //               else
+                        //                 return null;
+                        //             },
+                        //             controller:
+                        //                 signUpController.mobilenumbercontroller,
+                        //             decoration: InputDecoration(
+                        //               enabledBorder: OutlineInputBorder(
+                        //                 borderSide: BorderSide(
+                        //                     width: 2,
+                        //                     color: Colors.white), //<-- SEE HERE
+                        //               ),
+                        //               border: OutlineInputBorder(
+                        //                   // borderRadius: BorderRadius.circular(30),
+                        //
+                        //                   // borderSide: BorderSide.none,
+                        //                   ),
+                        //               label: RichText(
+                        //                 text: new TextSpan(
+                        //                   text: 'Mobile Number ',
+                        //                   style: TextStyle(
+                        //                       fontSize: 18,
+                        //                       fontWeight: FontWeight.normal,
+                        //                       color: Colors.white),
+                        //                   children: <TextSpan>[
+                        //                     new TextSpan(
+                        //                         text: '*',
+                        //                         style: new TextStyle(
+                        //                             fontWeight: FontWeight.bold,
+                        //                             color: Colors.red)),
+                        //                   ],
+                        //                 ),
+                        //               ),
+                        //             )),
+                        //         SizedBox(
+                        //           height: 10,
+                        //         ),
+                        //         TextFormField(
+                        //             obscureText:
+                        //                 signUpController.passwordObsecure.value,
+                        //             // validator: (value) {
+                        //             //   if (value!.isNotEmpty) {
+                        //             //     return "Password is required";
+                        //             //   }
+                        //             //   return null;
+                        //             // },
+                        //             // controller: WorkTypeController,
+                        //             decoration: InputDecoration(
+                        //               suffixIcon: IconButton(
+                        //                 //  color: Colors.white,
+                        //                 icon: Icon(
+                        //                     // Based on passwordVisible state choose the icon
+                        //                     signUpController.passwordObsecure.value
+                        //                         ? Icons.visibility_off
+                        //                         : Icons.visibility,
+                        //                     color: Colors.white
+                        //                     //Theme.of(context).primaryColor,
+                        //                     ),
+                        //                 onPressed: () {
+                        //                   // Update the state i.e. toogle the state of passwordVisible variable
+                        //                   setState(() {
+                        //                     signUpController
+                        //                             .passwordObsecure.value =
+                        //                         !signUpController
+                        //                             .passwordObsecure.value;
+                        //                   });
+                        //                 },
+                        //               ),
+                        //               enabledBorder: OutlineInputBorder(
+                        //                 borderSide: BorderSide(
+                        //                     width: 2,
+                        //                     color: Colors.white), //<-- SEE HERE
+                        //               ),
+                        //               border: OutlineInputBorder(
+                        //                 borderRadius: BorderRadius.circular(10),
+                        //                 // borderSide: BorderSide.none,
+                        //               ),
+                        //               label: RichText(
+                        //                 text: new TextSpan(
+                        //                   text: 'Password',
+                        //                   style: TextStyle(
+                        //                       fontSize: 18,
+                        //                       fontWeight: FontWeight.normal,
+                        //                       color: Colors.white),
+                        //                   children: <TextSpan>[
+                        //                     new TextSpan(
+                        //                         text: ' *',
+                        //                         style: new TextStyle(
+                        //                             fontWeight: FontWeight.bold,
+                        //                             color: Colors.red)),
+                        //                   ],
+                        //                 ),
+                        //               ),
+                        //             )),
+                        //
+                        //         SizedBox(
+                        //           height: 50,
+                        //         ),
+                        //         SizedBox(height: 20),
+                        //         TextButton(
+                        //           onPressed: () {
+                        //             String mobile = signUpController
+                        //                 .mobilenumbercontroller.text
+                        //                 .trim();
+                        //             String password = signUpController
+                        //                 .passwordcontroller.text
+                        //                 .trim();
+                        //
+                        //             if (mobile.isNotEmpty && password.isNotEmpty) {
+                        //               signUpController.signUpUser(mobile, password);
+                        //             } else {
+                        //               print("⚠ Please enter all fields!");
+                        //             }
+                        //           },
+                        //           style: TextButton.styleFrom(
+                        //             backgroundColor: Colors.blue,
+                        //             foregroundColor: Colors.white,
+                        //             padding: EdgeInsets.symmetric(
+                        //                 vertical: 12, horizontal: 24),
+                        //           ),
+                        //           child: Text("Sign Up"),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                        Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            maxLength: 10,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Mobile Number is required";
+                              }
+                              if (value.length != 10)
+                                return 'Mobile Number must be of 10 digit';
+                              else
+                                return null;
+                            },
+                            controller: signUpController.mobilenumbercontroller,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.add_ic_call_outlined,
+                                color: Colors.blue,
+                              ),
+                              border: OutlineInputBorder(),
+                              label: RichText(
+                                text: new TextSpan(
+                                  text: 'Mobile Number',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black),
+                                  children: <TextSpan>[
+                                    new TextSpan(
+                                        text: ' *',
+                                        style: new TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red)),
+                                  ],
                                 ),
-                                TextFormField(
-                                    obscureText:
-                                        signUpController.passwordObsecure.value,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Password is required";
-                                      }
-                                    },
-                                    // controller: WorkTypeController,
-                                    decoration: InputDecoration(
-                                      suffixIcon: IconButton(
-                                        //  color: Colors.white,
-                                        icon: Icon(
-                                            // Based on passwordVisible state choose the icon
-                                            signUpController
-                                                    .passwordObsecure.value
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                            color: Colors.white
-                                            //Theme.of(context).primaryColor,
-                                            ),
-                                        onPressed: () {
-                                          // Update the state i.e. toogle the state of passwordVisible variable
-                                          setState(() {
-                                            signUpController
-                                                    .passwordObsecure.value =
-                                                !signUpController
-                                                    .passwordObsecure.value;
-                                          });
-                                        },
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 2,
-                                            color: Colors.white), //<-- SEE HERE
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        // borderSide: BorderSide.none,
-                                      ),
-                                      label: RichText(
-                                        text: new TextSpan(
-                                          text: 'Password',
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.white),
-                                          children: <TextSpan>[
-                                            new TextSpan(
-                                                text: ' *',
-                                                style: new TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red)),
-                                          ],
-                                        ),
-                                      ),
-                                    )),
-                                // SizedBox(
-                                //   height: 30,
-                                // ),
-                                // TextButton(
-                                //   onPressed: () {
-                                //     // Navigator.of(context).push(
-                                //     //   MaterialPageRoute(
-                                //     //       builder: (context) =>
-                                //     //           Forgetpasswordscreen()),
-                                //     // );
-                                //   },
-                                //   child: Text(
-                                //     "Forgot Password?",
-                                //     style: TextStyle(
-                                //       fontWeight: FontWeight.bold,
-                                //       color: Colors.blue,
-                                //       fontSize: 20,
-                                //     ),
-                                //   ),
-                                // ),
-                                SizedBox(
-                                  height: 160,
-                                ),
-                                MaterialButton(
-                                  onPressed: () {
-                                    _signglobalkey.currentState?.validate();
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) => Loginscreen()),
-                                    );
-                                  },
-                                  height: 50,
-                                  // margin: EdgeInsets.symmetric(horizontal: 50),
-                                  color: Color(0xff0000FF),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  // decoration: BoxDecoration(
-                                  // ),
-                                  child: Center(
-                                    child: Text(
-                                      "Sign In",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          )),
+                          ),
+                          SizedBox(height: 10),
+                          TextFormField(
+                            obscureText:
+                                signUpController.passwordObsecure.value,
+                            validator: (value) {
+                              if (value!.isNotEmpty) {
+                                return "Password is required";
+                              }
+                              return null;
+                            },
+                            controller: signUpController.passwordcontroller,
+                            decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    // Based on passwordVisible state choose the icon
+                                    signUpController.password.value
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                  onPressed: () {
+                                    // Update the state i.e. toogle the state of passwordVisible variable
+                                    setState(() {
+                                      signUpController.password.value =
+                                          !signUpController.password.value;
+                                    });
+                                  },
+                                ),
+                                label: RichText(
+                                  text: new TextSpan(
+                                    text: 'Password',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black),
+                                    children: <TextSpan>[
+                                      new TextSpan(
+                                          text: ' *',
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red)),
+                                    ],
+                                  ),
+                                ),
+                                border: OutlineInputBorder()),
+                          ),
+                          SizedBox(height: 40),
+                          SizedBox(
+                            width: 200,
+                            child: TextButton(
+                              onPressed: () {
+                                String mobile = signUpController
+                                    .mobilenumbercontroller.text
+                                    .trim();
+                                String password = signUpController
+                                    .passwordcontroller.text
+                                    .trim();
+
+                                if (mobile.isNotEmpty && password.isNotEmpty) {
+                                  signUpController.signUpUser(mobile, password);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Loginscreen()));
+                                } else {
+                                  print("⚠ Please enter all fields!");
+                                }
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 24),
+                              ),
+                              child: Text(
+                                "Sign Up",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ),
+
+                          // TextButton(
+                          //     onPressed: () {
+                          //       Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) => Loginscreen()));
+                          //     },
+                          //     child: Text("Already have an account?")),
+                        ],
+                      ),
                     ),
                   ),
                 ],

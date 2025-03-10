@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:attendanceapp/CommenFiles/translateService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,7 @@ class _PunchinscreenState extends State<Punchinscreen> {
               // ),
               ListTile(
                 leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
+                title: Text(TranslationService.translate('Camera')),
                 onTap: () {
                   getImage(ImageSource.camera);
                   Navigator.of(context).pop();
@@ -70,7 +71,9 @@ class _PunchinscreenState extends State<Punchinscreen> {
           _dateTime = DateTime.now().toString();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(// is this context <<<
-              const SnackBar(content: Text('Nothing is selected')));
+              SnackBar(
+                  content: Text(
+                      TranslationService.translate("Nothing is selected"))));
         }
       },
     );
@@ -82,24 +85,51 @@ class _PunchinscreenState extends State<Punchinscreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.0), // here the desired height
-            child: AppbarName(
-              title: "Punch In",
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                ),
-                //tooltip: 'Setting Icon',
-                onPressed: () {
-                  Get.toNamed('/Siteheaddashboard');
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(builder: (context) => Punchscreen()),
-                  // );
-                },
-              ), //IconButton,
-            )),
+        appBar: AppBar(
+          title: Text(TranslationService.translate("Punch In")),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ],
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            //tooltip: 'Setting Icon',
+            onPressed: () {
+              Get.toNamed('/Siteheaddashboard');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(builder: (context) => Punchscreen()),
+              // );
+            },
+          ), //IconButton,
+        ),
         body: Column(children: [
           Center(child: imageProfile()),
           SizedBox(
@@ -168,7 +198,7 @@ class _PunchinscreenState extends State<Punchinscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Associate Contractor",
+              labelText: TranslationService.translate("Associate Contractor"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -222,7 +252,7 @@ class _PunchinscreenState extends State<Punchinscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "First Name",
+              labelText: TranslationService.translate("First Name"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -276,7 +306,7 @@ class _PunchinscreenState extends State<Punchinscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Last Name",
+              labelText: TranslationService.translate("Last Name"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -330,7 +360,7 @@ class _PunchinscreenState extends State<Punchinscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Select Work Type",
+              labelText: TranslationService.translate("Select Work Type"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -384,7 +414,7 @@ class _PunchinscreenState extends State<Punchinscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Select Shift",
+              labelText: TranslationService.translate("Select Shift"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -441,7 +471,8 @@ class _PunchinscreenState extends State<Punchinscreen> {
                   label: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Start Time",
+              TranslationService.translate("Start Time"),
+
               // "${shiftdropdown}",
               style: TextStyle(
                   fontSize: 18,
@@ -462,7 +493,7 @@ class _PunchinscreenState extends State<Punchinscreen> {
           height: 60.0,
           child: ElevatedButton(
             child: Text(
-              'Submit',
+              TranslationService.translate("Submit"),
               style: TextStyle(
                 color: Colors.white,
               ),

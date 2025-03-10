@@ -1,3 +1,4 @@
+import 'package:attendanceapp/CommenFiles/translateService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -8,6 +9,13 @@ import '../../../../widgets/AppBarSample.dart';
 
 class FacilityAddListItemsController extends GetxController {
   String? selectedOption;
+  TextEditingController FieldSiteNameController = TextEditingController();
+  TextEditingController ProximityController = TextEditingController();
+  TextEditingController SiteHeadNameController = TextEditingController();
+  TextEditingController LatitudeController = TextEditingController();
+  TextEditingController LongitudeController = TextEditingController();
+  TextEditingController MobileNumberController = TextEditingController();
+  TextEditingController CategeryController = TextEditingController();
 
   // Options for the dropdown
   final List<String> options = ['Raja', 'Ram', 'mani', 'Rajesh'];
@@ -64,8 +72,6 @@ class FacilityAddListItemsController extends GetxController {
   //   }
   // }
   SampleItem? selectedItem;
-  var _currentSelectedItem;
-  List _studentList = ["sdfsd", "sdfsdf"];
 
   var timepicker = "";
 
@@ -136,8 +142,8 @@ class FacilityAddListItemsController extends GetxController {
   //
   //   print("Latitude: $latitude, Longitude: $longitude");
   // }
-  String lat = "Latitude";
-  String long = "Longitude";
+  String lat = TranslationService.translate('Latitude');
+  String long = TranslationService.translate('Longitude');
 
   double distancemeter = 0.0;
 

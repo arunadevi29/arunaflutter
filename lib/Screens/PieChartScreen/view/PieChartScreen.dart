@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../CommenFiles/getXcontroller.dart';
+import '../../../CommenFiles/translateService.dart';
 import '../../Admin/AdminDashboard/view/Admin_Dashboard_Screen.dart';
 
 class Piechartscreen extends StatefulWidget {
@@ -28,7 +29,9 @@ class _PiechartscreenState extends State<Piechartscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PieChart"),
+        title: Text(
+          TranslationService.translate("Pie Chart"),
+        ),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -235,7 +238,7 @@ class _PiechartscreenState extends State<Piechartscreen> {
                   controller: piechartController.fromDateController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    labelText: "From Date",
+                    labelText: TranslationService.translate("From Date"),
                     labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -256,7 +259,7 @@ class _PiechartscreenState extends State<Piechartscreen> {
                   controller: piechartController.toDateController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    labelText: "To Date",
+                    labelText: TranslationService.translate("To Date"),
                     labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 20,

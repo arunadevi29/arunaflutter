@@ -53,6 +53,11 @@ final routes = [
       transition: Transition.fadeIn,
       binding: HomeBinding()),
   GetPage(
+      name: '/Signupscreen',
+      page: () => const Signupscreen(),
+      transition: Transition.fadeIn,
+      binding: HomeBinding()),
+  GetPage(
       name: '/Splashscreen',
       page: () => const Splashscreen(),
       transition: Transition.fadeIn,
@@ -87,13 +92,13 @@ final routes = [
       page: () => FacilitiesScreen(),
       transition: Transition.fadeIn,
       binding: HomeBinding()),
-  GetPage(
-      name: '/FacilitiesListView',
-      page: () => FacilitiesListView(
-            containers: [],
-          ),
-      transition: Transition.fadeIn,
-      binding: HomeBinding()),
+  // GetPage(
+  //     name: '/FacilitiesListView',
+  //     page: () => FacilitiesListView(
+  //           containers: [],
+  //         ),
+  //     transition: Transition.fadeIn,
+  //     binding: HomeBinding()),
   GetPage(
       name: '/Facilitydetails',
       page: () => Facilitydetails(),
@@ -126,7 +131,7 @@ final routes = [
   ),
   GetPage(
       name: '/ShiftTimeFromScreen',
-      page: () => const ShiftTimeFromScreen(),
+      page: () => ShiftTimeFromScreen(),
       transition: Transition.fadeIn,
       binding: HomeBinding()),
   GetPage(

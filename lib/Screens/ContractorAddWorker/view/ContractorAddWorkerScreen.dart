@@ -7,10 +7,9 @@ import '../../../CommenFiles/getXcontroller.dart';
 import '../../../widgets/AppBarSample.dart';
 import '../../SiteHeader/AddSiteWorker/view/SiteHeadAddSiteWorkerScreen.dart';
 
-const List<String> assoicatedrop = <String>[
-  'Anand', 'mani', 'Ravi'
-];
-const List<String> worktypedrop = <String>[ 'House keeping',
+const List<String> assoicatedrop = <String>['Anand', 'mani', 'Ravi'];
+const List<String> worktypedrop = <String>[
+  'House keeping',
   'Security',
   'Watchman',
 ];
@@ -278,109 +277,108 @@ class _ContractoraddworkerscreenState extends State<Contractoraddworkerscreen> {
     return Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Container(
-          // decoration: ShapeDecoration(
-          //   shape: RoundedRectangleBorder(
-          //     side: BorderSide(width: 1.0, style: BorderStyle.solid),
-          //     borderRadius: BorderRadius.circular(10),
-          //   ),
-          // ),
+            // decoration: ShapeDecoration(
+            //   shape: RoundedRectangleBorder(
+            //     side: BorderSide(width: 1.0, style: BorderStyle.solid),
+            //     borderRadius: BorderRadius.circular(10),
+            //   ),
+            // ),
             child: DropdownButtonFormField(
-              decoration: InputDecoration(
-                  labelText: "Associate Contractor ",
-                  labelStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black),
-                  // prefixIcon: Padding(
-                  //   padding: const EdgeInsets.all(15.0),
-                  //   child: Image.asset(
-                  //     'assets/images/mech.png',
-                  //     color: Colors.black,
-                  //     height: 2,
-                  //     width: 2,
-                  //   ),
-                  // ),
-                  border:
+          decoration: InputDecoration(
+              labelText: "Associate Contractor ",
+              labelStyle: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black),
+              // prefixIcon: Padding(
+              //   padding: const EdgeInsets.all(15.0),
+              //   child: Image.asset(
+              //     'assets/images/mech.png',
+              //     color: Colors.black,
+              //     height: 2,
+              //     width: 2,
+              //   ),
+              // ),
+              border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-              value: contractorAddWorkerController.Assoicate,
+          value: contractorAddWorkerController.Assoicate,
 
-              // validator: (value) {
-              //   if (value == null || value.isEmpty) {
-              //     return "Select Shift can't be empty";
-              //   } else {
-              //     return null;
-              //   }
-              // },
+          // validator: (value) {
+          //   if (value == null || value.isEmpty) {
+          //     return "Select Shift can't be empty";
+          //   } else {
+          //     return null;
+          //   }
+          // },
 
-              items: assoicatedrop.map<DropdownMenuItem<String>>((
-                  String value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              // After selecting the desired option,it will
-              // change button value to selected value
-              onChanged: (String? newValue) {
-                setState(() {
-                  contractorAddWorkerController.Assoicate = newValue!;
-                });
-              },
-            )));
+          items: assoicatedrop.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              contractorAddWorkerController.Assoicate = newValue!;
+            });
+          },
+        )));
   }
 
   Widget SelectWorkType() {
     return Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Container(
-          // decoration: ShapeDecoration(
-          //   shape: RoundedRectangleBorder(
-          //     side: BorderSide(width: 1.0, style: BorderStyle.solid),
-          //     borderRadius: BorderRadius.circular(10),
-          //   ),
-          // ),
+            // decoration: ShapeDecoration(
+            //   shape: RoundedRectangleBorder(
+            //     side: BorderSide(width: 1.0, style: BorderStyle.solid),
+            //     borderRadius: BorderRadius.circular(10),
+            //   ),
+            // ),
             child: DropdownButtonFormField(
-              decoration: InputDecoration(
-                  labelText: "Select Work Type",
-                  labelStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.asset(
-                      'assets/images/mech.png',
-                      color: Colors.black,
-                      height: 2,
-                      width: 2,
-                    ),
-                  ),
-                  border:
+          decoration: InputDecoration(
+              labelText: "Select Work Type",
+              labelStyle: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Image.asset(
+                  'assets/images/mech.png',
+                  color: Colors.black,
+                  height: 2,
+                  width: 2,
+                ),
+              ),
+              border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-              value: contractorAddWorkerController.Worktype,
+          value: contractorAddWorkerController.Worktype,
 
-              // validator: (value) {
-              //   if (value == null || value.isEmpty) {
-              //     return "Select Shift can't be empty";
-              //   } else {
-              //     return null;
-              //   }
-              // },
+          // validator: (value) {
+          //   if (value == null || value.isEmpty) {
+          //     return "Select Shift can't be empty";
+          //   } else {
+          //     return null;
+          //   }
+          // },
 
-              items: worktypedrop.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              // After selecting the desired option,it will
-              // change button value to selected value
-              onChanged: (String? newValue) {
-                setState(() {
-                  contractorAddWorkerController.Worktype = newValue!;
-                });
-              },
-            )));
+          items: worktypedrop.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              contractorAddWorkerController.Worktype = newValue!;
+            });
+          },
+        )));
   }
 
   Widget ConfirmPasswordField() {

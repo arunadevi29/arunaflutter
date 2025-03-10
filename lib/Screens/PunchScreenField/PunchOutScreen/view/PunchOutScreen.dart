@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../CommenFiles/translateService.dart';
 import '../../../../widgets/AppBarSample.dart';
 import '../../PunchScreen/view/PunchScreen.dart';
 
@@ -47,7 +48,7 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
               // ),
               ListTile(
                 leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
+                title: Text(TranslationService.translate("Camera")),
                 onTap: () {
                   getImage(ImageSource.camera);
                   Navigator.of(context).pop();
@@ -72,7 +73,9 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
           punchOutController.dateTime = DateTime.now().toString();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(// is this context <<<
-              const SnackBar(content: Text('Nothing is selected')));
+              SnackBar(
+                  content: Text(
+                      TranslationService.translate("Nothing is selected"))));
         }
       },
     );
@@ -80,25 +83,52 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.0), // here the desired height
-            child: AppbarName(
-              title: "Punch Out",
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                ),
-                //tooltip: 'Setting Icon',
-                onPressed: () {
-                  Get.toNamed('/Siteheaddashboard');
-                  // Get.toNamed('/Punchscreen');
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(builder: (context) => Punchscreen()),
-                  // );
-                },
-              ), //IconButton,
-            )),
+        appBar: AppBar(
+          title: Text(TranslationService.translate("Punch Out")),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ],
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            //tooltip: 'Setting Icon',
+            onPressed: () {
+              Get.toNamed('/Siteheaddashboard');
+              // Get.toNamed('/Punchscreen');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(builder: (context) => Punchscreen()),
+              // );
+            },
+          ), //IconButton,
+        ),
         body: Column(children: [
           Center(child: imageProfile()),
           SizedBox(
@@ -171,7 +201,7 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Associate Contractor",
+              labelText: TranslationService.translate("Associate Contractor"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -225,7 +255,7 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "First Name",
+              labelText: TranslationService.translate("First Name"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -279,7 +309,7 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Last Name",
+              labelText: TranslationService.translate("Last Name"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -333,7 +363,7 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Select Work Type",
+              labelText: TranslationService.translate("Select Work Type"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -387,7 +417,7 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
             // ),
             child: DropdownButtonFormField(
           decoration: InputDecoration(
-              labelText: "Select Shift",
+              labelText: TranslationService.translate("Select Shift"),
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -444,7 +474,8 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
                   label: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Start Time",
+              TranslationService.translate("Start Time"),
+
               // "${shiftdropdown}",
               style: TextStyle(
                   fontSize: 18,
@@ -472,7 +503,8 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
                   label: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "End Time",
+              TranslationService.translate("End Time"),
+
               // "${shiftdropdown}",
               style: TextStyle(
                   fontSize: 18,
@@ -493,7 +525,7 @@ class _PunchoutscreenState extends State<Punchoutscreen> {
           height: 60.0,
           child: ElevatedButton(
             child: Text(
-              'Submit',
+              TranslationService.translate("Submit"),
               style: TextStyle(
                 color: Colors.white,
               ),

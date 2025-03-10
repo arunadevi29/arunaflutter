@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:attendanceapp/Screens/LoginScreen/view/LoginScreen.dart';
+import 'package:attendanceapp/Screens/SiteHeadDashboard/view/SiteheadDashboard.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,124 +16,95 @@ class SignUpController extends GetxController {
   RxBool isChecked = false.obs;
   RxBool sendOtp = false.obs;
   RxBool signUpLoader = false.obs;
-
+  RxBool password = true.obs;
   RxBool passwordObsecure = true.obs;
   RxBool confirmPasswordObsecure = true.obs;
-
-  // var countryApiData = CountryApi().obs;
-  final fullnameFocusNode = FocusNode();
-  final surnameFocusNode = FocusNode();
-  final emailFocusNode = FocusNode();
-  final confirmEmailFocusNode = FocusNode();
-  final mobileNumberFocusNode = FocusNode();
-  final enterOTPFocusNode = FocusNode();
-  final passwordFocusNode = FocusNode();
-  final confirmPasswordFocusNode = FocusNode();
-  final countryFocusNode = FocusNode();
 
   cleaner() {
     mobilenumbercontroller.clear();
     passwordcontroller.clear();
   }
 
-//   signUpApi() {
-//     print("confirm password ${confirmPasswordController.text}");
-//     postMethod(
-//         statusCode: 201,
-//         endPoint: 'register',
-//         body: {
-//           "first_name": fullNameController.text,
-//           "surname": surNameController.text,
-//           "email": emailController.text,
-//           "confirm_email": confirmEmailController.text,
-//           "mobile_number": phoneNumber.text,
-//           "country": countryController.text,
-//           "agreement": isChecked.value,
-//           "password": yourPasswordController.text,
-//           "confirmed_password": confirmPasswordController.text
-//         },
-//         token: '',
-//         setLoader: (s) {
-//           signUpLoader.value = s;
-//         },
-//         success: (bool) {
-//           if (bool == true) {
-//             cleaner();
-//             Get.offNamed("/signIn");
-//           }
-//         });
-//     // if (res.toString() != null) {
-//     //   print(res);
-//     // }
-//   }
-//
-//   signUpApis() async {
-//     signUpLoader.value = true;
-//     print("running");
-//     var headers = {'Content-Type': 'application/json'};
-//     var request = http.Request('POST',
-//         Uri.parse('https://winngoogala.winngooconsultancy.in/api/register'));
-//     request.body = json.encode({
-//       "first_name": fullNameController.text,
-//       "surname": surNameController.text,
-//       "email": emailController.text,
-//       "confirm_email": confirmEmailController.text,
-//       "mobile_number": phoneNumber.text,
-//       "country": countryController.text,
-//       "agreement": isChecked.value,
-//       "password": yourPasswordController.text,
-//       "password_confirmation": confirmPasswordController.text
-//     });
-//     request.headers.addAll(headers);
-//
-//     http.StreamedResponse response = await request.send();
-//     signUpLoader.value = false;
-//     if (response.statusCode == 201) {
-//       String responseBody = await response.stream.bytesToString();
-//
-//       var jsonResponse = jsonDecode(responseBody);
-//       String successMessage = jsonResponse["message"];
-//
-//       // snackBar(isBadReqested: false, msg: successMessage);
-//       cleaner();
-//       Get.toNamed("/signIn");
-//     } else {
-//       String responseBody = await response.stream.bytesToString();
-//       final responseJson = json.decode(responseBody);
-//       if (responseJson.containsKey('errors')) {
-//         final errors = responseJson['errors'];
-//
-//         // Access the specific errors and display them
-//         if (errors.containsKey('email')) {
-//           final emailError =
-//               errors['email'][0]; // Access the first error message for email
-//           // snackBar(isBadReqested: true, msg: emailError);
-//         }
-//
-//         if (errors.containsKey('confirm_email')) {
-//           final confirmEmailError = errors['confirm_email']
-//               [0]; // Access the first error message for confirm email
-//           // snackBar(isBadReqested: true, msg: confirmEmailError);
-//         }
-//       }
-//     }
-//   }
-//
-//   countryApi() async {
-//     var res = await getMethod(
-//         endPoint: "countries",
-//         setLoader: (s) {
-//           signUpLoader.value = s;
-//         },
-//         success: (s) {
-//           if (s == true) {
-//             Get.toNamed("/signUp");
-//           }
-//         });
-//
-//     if (res.toString().isNotEmpty) {
-//       // countryApiData.value = countryModelData(res);
-//       // print("sk done ${countryApiData.value.data![0].name}");
-//     }
-//   }
+  var isLoading = false.obs; // For showing loading indicator
+
+  Future<void> signUp() async {
+    String url =
+        " https://mobileappapi.onrender.com/api/auth/register"; // Replace with your API URL
+
+    // if (mobilenumbercontroller.text.isEmpty ||
+    //     passwordcontroller.text.isEmpty) {
+    //   Get.snackbar("Error", "⚠ Please fill all fields!",
+    //       backgroundColor: Colors.red, colorText: Colors.white);
+    //   return ;
+    // }
+
+    final Map<String, dynamic> requestBody = {
+      "mobileNumber": mobilenumbercontroller.text.trim(),
+      "password": passwordcontroller.text.trim(),
+    };
+
+    try {
+      isLoading.value = true; // Show loading
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(requestBody),
+      );
+      isLoading.value = false; // Hide loading
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        Get.snackbar("Success", "✅ Signup successful!",
+            backgroundColor: Colors.green, colorText: Colors.white);
+        // Get.offNamed('/login'); // Navigate to login screen after success
+      } else {
+        Get.snackbar("Error", "❌ Signup failed: ${response.body}",
+            backgroundColor: Colors.red, colorText: Colors.white);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", "⚠ API Error: $e",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
+  String result = '';
+
+  Future<void> signUpUser(String mobileNumber, String password) async {
+    String url = "https://mobileappapi.onrender.com/api/auth/register"
+        .trim(); // Ensure no spaces
+
+    final Map<String, dynamic> requestBody = {
+      "mobileNumber": mobileNumber,
+      "password": password
+    };
+
+    print("📩 Sending Request to: $url");
+    print("🔍 Request Body: ${jsonEncode(requestBody)}");
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      print("🔍 Response Status: ${response.statusCode}");
+      print("🔍 Response Body: ${response.body}");
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        print("✅ Signup successful!");
+      } else {
+        print("❌ Signup failed. Status: ${response.statusCode}");
+        print("❌ Error Response: ${response.body}");
+      }
+    } catch (e) {
+      print("⚠ Error: $e");
+    }
+  }
+
+  void main() {
+    signUpUser("3234567897", "1230448");
+  }
 }

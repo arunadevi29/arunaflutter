@@ -70,14 +70,6 @@ class _AdduserscreenState extends State<Adduserscreen> {
                             borderRadius: BorderRadius.circular(5))),
                     value: addUserScreenController.selectedOption,
 
-                    // validator: (value) {
-                    //   if (value == null || value.isEmpty) {
-                    //     return "Select Work Type can't be empty";
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
-
                     items: addUserScreenController.options.map((String items) {
                       return DropdownMenuItem(
                         value: items,

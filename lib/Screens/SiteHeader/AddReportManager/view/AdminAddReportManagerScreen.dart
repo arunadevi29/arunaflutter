@@ -1,4 +1,5 @@
 import 'package:attendanceapp/CommenFiles/getXcontroller.dart';
+import 'package:attendanceapp/CommenFiles/translateService.dart';
 import 'package:attendanceapp/Screens/SiteHeadDashboard/view/SiteheadDashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,25 +38,55 @@ class _AdminaddreportmanagerscreenState
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.0), // here the desired height
-            child: AppbarName(
-              title: "Add Report Manager",
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                ),
-                //tooltip: 'Setting Icon',
-                onPressed: () {
-                  Get.toNamed('/Addreportuserlist');
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //       builder: (context) => Addreportuserlist()),
-                  // );
-                },
-              ), //IconButton
-            )),
+        appBar: AppBar(
+          title: Text(
+            TranslationService.translate("Add Report Manager"),
+            style: TextStyle(fontSize: 20),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ],
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 25,
+            ),
+            //tooltip: 'Setting Icon',
+            onPressed: () {
+              Get.toNamed('/Addreportuserlist');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //       builder: (context) => Addreportuserlist()),
+              // );
+            },
+          ), //IconButton
+        ),
         body: Container(
           margin: const EdgeInsets.all(5),
           child: SingleChildScrollView(
@@ -82,7 +113,7 @@ class _AdminaddreportmanagerscreenState
                       Padding(
                         padding: const EdgeInsets.only(left: 12),
                         child: Text(
-                          "Set Password",
+                          TranslationService.translate("Set Password"),
                           style: TextStyle(
                               color: Color(0xff0056F1),
                               fontWeight: FontWeight.normal,
@@ -121,7 +152,7 @@ class _AdminaddreportmanagerscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "First Name is required";
+                return TranslationService.translate("First Name is required");
               }
 
               //else if (value.length < 10) {}
@@ -141,7 +172,7 @@ class _AdminaddreportmanagerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'First Name',
+                  text: TranslationService.translate("First Name"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -177,7 +208,7 @@ class _AdminaddreportmanagerscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Last Name is required";
+                return TranslationService.translate("Last Name is required");
               }
 
               //else if (value.length < 10) {}
@@ -197,7 +228,7 @@ class _AdminaddreportmanagerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Last Name',
+                  text: TranslationService.translate("Last Name"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -234,10 +265,12 @@ class _AdminaddreportmanagerscreenState
             maxLength: 10,
             validator: (value) {
               if (value!.isEmpty) {
-                return "Mobile Number is required";
+                return TranslationService.translate(
+                    "Mobile Number is required");
               }
               if (value.length != 10)
-                return 'Mobile Number must be of 10 digit';
+                return TranslationService.translate(
+                    "Mobile Number must be of 10 digit");
               else
                 return null;
 
@@ -258,7 +291,7 @@ class _AdminaddreportmanagerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Mobile Number',
+                  text: TranslationService.translate("Mobile Number"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -294,7 +327,7 @@ class _AdminaddreportmanagerscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Password is required";
+                return TranslationService.translate("Password is required");
               }
             },
             keyboardType: TextInputType.number,
@@ -314,7 +347,7 @@ class _AdminaddreportmanagerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Enter Password',
+                  text: TranslationService.translate("Enter Password"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -371,10 +404,11 @@ class _AdminaddreportmanagerscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Confirm Password is required";
+                return TranslationService.translate(
+                    "Confirm Password is required");
               }
               if (value != addReportController.EnterPasswordController.text)
-                return 'Not Match';
+                return TranslationService.translate("Not Match");
             },
             keyboardType: TextInputType.number,
             controller: addReportController.ConfirmPasswordController,
@@ -391,7 +425,7 @@ class _AdminaddreportmanagerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Confirm Number',
+                  text: TranslationService.translate("Confirm Number"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -427,7 +461,7 @@ class _AdminaddreportmanagerscreenState
           height: 60,
           child: ElevatedButton(
             child: Text(
-              'Submit',
+              TranslationService.translate("Submit"),
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -446,7 +480,8 @@ class _AdminaddreportmanagerscreenState
             ),
             onPressed: () {
               if (Reportglobalkey.currentState!.validate()) {
-                // Get.toNamed('/Addreportuserlist');
+                addReportController.addreportmanagerPostapi();
+                Get.toNamed('/Addreportuserlist');
                 // Navigator.of(context).push(MaterialPageRoute(
                 //     builder: (context) =>
                 //         AddCustomerDetailsScreen(

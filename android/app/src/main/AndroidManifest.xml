@@ -12,7 +12,7 @@
 
 
     <application
-        android:label="Site Header"
+        android:label="Site Head"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

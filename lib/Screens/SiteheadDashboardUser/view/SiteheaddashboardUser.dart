@@ -1,8 +1,10 @@
+import 'package:attendanceapp/CommenFiles/translateService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../CommenFiles/getXcontroller.dart';
 import '../../AddUser/view/AddUserScreen.dart';
 
 class SiteheadUser extends StatefulWidget {
@@ -16,8 +18,36 @@ class _SiteheadUserState extends State<SiteheadUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User"),
-
+        title: Text(TranslationService.translate("User")),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton(
+                underline: SizedBox(),
+                icon: Icon(
+                  Icons.language,
+                  color: Colors.blue,
+                  size: 35,
+                ),
+                items: const [
+                  DropdownMenuItem(
+                      value: "en",
+                      child: Text(
+                        'English',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )),
+                  DropdownMenuItem(
+                      value: "ka",
+                      child: Text(
+                        'Kannada',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )),
+                ],
+                onChanged: (value) {
+                  controller.setLocale(value);
+                }),
+          )
+        ],
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -67,7 +97,7 @@ class _SiteheadUserState extends State<SiteheadUser> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  "Contractor",
+                                  TranslationService.translate("Contractor"),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -96,7 +126,7 @@ class _SiteheadUserState extends State<SiteheadUser> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "8 Contractors",
+                                  TranslationService.translate("8 Contractors"),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
@@ -133,7 +163,7 @@ class _SiteheadUserState extends State<SiteheadUser> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Site\nWorker",
+                                  TranslationService.translate("Site\nWorker"),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -162,7 +192,8 @@ class _SiteheadUserState extends State<SiteheadUser> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "20 Site Workers",
+                                  TranslationService.translate(
+                                      "20 Site Workers"),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,

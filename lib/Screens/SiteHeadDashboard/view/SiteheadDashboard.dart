@@ -1,8 +1,10 @@
+import 'package:attendanceapp/CommenFiles/translateService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../CommenFiles/getXcontroller.dart';
 import '../../AddUser/view/AddUserScreen.dart';
 import '../../Admin/AdminDashboard/view/Admin_Dashboard_Screen.dart';
 
@@ -41,7 +43,7 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: Text(
-                      "Hello!",
+                      TranslationService.translate("Hello!"),
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey,
@@ -49,7 +51,7 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                     ),
                   ),
                   Text(
-                    "Site Head",
+                    TranslationService.translate("Site Head"),
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -58,34 +60,55 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                 ],
               ),
               Spacer(),
-              // IconButton(
-              //   icon: const Icon(
-              //     Icons.notifications,
-              //     size: 30,
-              //   ),
-              //   //tooltip: 'Setting Icon',
-              //   onPressed: () {},
-              // ),
 
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.settings,
-                    size: 30,
-                  ),
-                  //tooltip: 'Setting Icon',
-                  onPressed: () {
-                    Get.toNamed('/Settingsscreen');
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const Settingsscreen()),
-                    // );
-                  },
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 15),
+              //   child: IconButton(
+              //     icon: const Icon(
+              //       Icons.settings,
+              //       size: 30,
+              //     ),
+              //     //tooltip: 'Setting Icon',
+              //     onPressed: () {
+              //       Get.toNamed('/Settingsscreen');
+              //       // Navigator.of(context).push(
+              //       //   MaterialPageRoute(
+              //       //       builder: (context) => const Settingsscreen()),
+              //       // );
+              //     },
+              //   ),
+              // ),
             ],
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ],
           leading: Padding(
             padding: const EdgeInsets.only(top: 10, left: 10),
             child: CircleAvatar(
@@ -128,12 +151,25 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Punch In",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                    ),
+                                        TranslationService.translate(
+                                            'Punch In'),
+                                        // "Facilities".tr,
+                                        style: adminDashboardcontroller.langsize
+                                            ? TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20)
+                                            : TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 19)),
+                                    // Text(
+                                    //   TranslationService.translate("Punch In"),
+                                    //   style: TextStyle(
+                                    //       color: Colors.black,
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize: 20),
+                                    // ),
                                     Container(
                                         width: 40,
                                         height: 40,
@@ -192,12 +228,25 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Punch Out",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                    ),
+                                        TranslationService.translate(
+                                            'Punch Out'),
+                                        // "Facilities".tr,
+                                        style: adminDashboardcontroller.langsize
+                                            ? TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20)
+                                            : TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 19)),
+                                    // Text(
+                                    //   TranslationService.translate("Punch Out"),
+                                    //   style: TextStyle(
+                                    //       color: Colors.white,
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize: 20),
+                                    // ),
                                     Container(
                                         width: 40,
                                         height: 40,
@@ -262,7 +311,7 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Report",
+                                    TranslationService.translate("Report"),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -330,7 +379,7 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "User",
+                                    TranslationService.translate("User"),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -365,7 +414,7 @@ class _SiteheaddashboardState extends State<Siteheaddashboard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "3 Users",
+                                    TranslationService.translate("3 Users"),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.normal,

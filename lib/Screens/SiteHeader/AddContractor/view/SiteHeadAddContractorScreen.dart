@@ -1,3 +1,4 @@
+import 'package:attendanceapp/CommenFiles/translateService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,25 +37,52 @@ class _SiteheadaddcontractorscreenState
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.0), // here the desired height
-            child: AppbarName(
-              title: "Add Contractor",
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                ),
-                //tooltip: 'Setting Icon',
-                onPressed: () {
-                  Get.toNamed('/Addcontractoruserlist');
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //       builder: (context) => Addcontractoruserlist()),
-                  // );
-                },
-              ), //IconButton
-            )),
+        appBar: AppBar(
+          title: Text(TranslationService.translate("Add Contractor")),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ],
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            //tooltip: 'Setting Icon',
+            onPressed: () {
+              Get.toNamed('/Addcontractoruserlist');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //       builder: (context) => Addcontractoruserlist()),
+              // );
+            },
+          ), //IconButton
+        ),
         body: Container(
           margin: const EdgeInsets.all(5),
           child: SingleChildScrollView(
@@ -81,7 +109,7 @@ class _SiteheadaddcontractorscreenState
                       Padding(
                         padding: const EdgeInsets.only(left: 12),
                         child: Text(
-                          "Set Password",
+                          TranslationService.translate("Set Password"),
                           style: TextStyle(
                               color: Color(0xff0056F1),
                               fontWeight: FontWeight.normal,
@@ -123,7 +151,8 @@ class _SiteheadaddcontractorscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "First Name can't be empty";
+                return TranslationService.translate(
+                    "First Name can't be empty");
               }
 
               //else if (value.length < 10) {}
@@ -143,7 +172,7 @@ class _SiteheadaddcontractorscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'First Name',
+                  text: TranslationService.translate("First Name"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -179,7 +208,7 @@ class _SiteheadaddcontractorscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Last Name can't be empty";
+                return TranslationService.translate("Last Name can't be empty");
               }
 
               //else if (value.length < 10) {}
@@ -199,7 +228,7 @@ class _SiteheadaddcontractorscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Last Name',
+                  text: TranslationService.translate("Last Name"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -236,10 +265,12 @@ class _SiteheadaddcontractorscreenState
             maxLength: 10,
             validator: (value) {
               if (value!.isEmpty) {
-                return "Mobile Number can't be empty";
+                return TranslationService.translate(
+                    "Mobile Number can't be empty");
               }
               if (value.length != 10)
-                return 'Mobile Number must be of 10 digit';
+                return TranslationService.translate(
+                    "Mobile Number must be of 10 digit");
               else
                 return null;
 
@@ -260,7 +291,7 @@ class _SiteheadaddcontractorscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Mobile Number',
+                  text: TranslationService.translate("Mobile Number"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -296,7 +327,8 @@ class _SiteheadaddcontractorscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Enter Password can't be empty";
+                return TranslationService.translate(
+                    "Enter Password can't be empty");
               }
             },
             keyboardType: TextInputType.number,
@@ -316,7 +348,7 @@ class _SiteheadaddcontractorscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Enter Password',
+                  text: TranslationService.translate("Enter Password"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -368,10 +400,11 @@ class _SiteheadaddcontractorscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Confirm Password can't be empty";
+                return TranslationService.translate(
+                    "Confirm Password can't be empty");
               }
               if (value != addContractorController.EnterPasswordController.text)
-                return 'Not Match';
+                return TranslationService.translate("Not Match");
             },
             keyboardType: TextInputType.number,
             controller: addContractorController.ConfirmPasswordController,
@@ -388,7 +421,7 @@ class _SiteheadaddcontractorscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Confirm Password',
+                  text: TranslationService.translate("Confirm Password"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -443,6 +476,11 @@ class _SiteheadaddcontractorscreenState
             ),
             onPressed: () {
               if (_sitecontractglobalkey.currentState!.validate()) {
+                addContractorController.addcontractorPostapi();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Addcontractoruserlist()));
                 // Get.toNamed('/Addcontractoruserlist');
                 // Navigator.of(context).push(MaterialPageRoute(
                 //     builder: (context) =>

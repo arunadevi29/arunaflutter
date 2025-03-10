@@ -19,7 +19,11 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () => Get.toNamed("/signIn"));
+    Timer(
+        Duration(seconds: 1),
+        () => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Loginscreen())));
+    //Get.toNamed("/Loginscreen"));
   }
 
   @override

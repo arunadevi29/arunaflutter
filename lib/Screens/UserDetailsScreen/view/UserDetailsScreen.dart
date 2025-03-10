@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../CommenFiles/getXcontroller.dart';
+import '../../../CommenFiles/translateService.dart';
 import '../../AddUser/view/AddUserScreen.dart';
 import '../../Admin/AdminDashboard/view/Admin_Dashboard_Screen.dart';
 import '../../SiteHeader/WorkerList/view/WorkerListScreen.dart';
@@ -22,8 +24,38 @@ class _UserdetailsscreenState extends State<Userdetailsscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User"),
-
+        title: Text(
+          TranslationService.translate("User"),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton(
+                underline: SizedBox(),
+                icon: Icon(
+                  Icons.language,
+                  color: Colors.blue,
+                  size: 35,
+                ),
+                items: const [
+                  DropdownMenuItem(
+                      value: "en",
+                      child: Text(
+                        'English',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )),
+                  DropdownMenuItem(
+                      value: "ka",
+                      child: Text(
+                        'Kannada',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )),
+                ],
+                onChanged: (value) {
+                  controller.setLocale(value);
+                }),
+          )
+        ],
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -73,7 +105,7 @@ class _UserdetailsscreenState extends State<Userdetailsscreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Site Head",
+                                  TranslationService.translate("Site Head"),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -102,7 +134,7 @@ class _UserdetailsscreenState extends State<Userdetailsscreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "5 Site Heads",
+                                  TranslationService.translate("5 Site Heads"),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
@@ -204,7 +236,9 @@ class _UserdetailsscreenState extends State<Userdetailsscreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Report\nManager",
+                                  TranslationService.translate(
+                                    "Report\nManager",
+                                  ),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -233,7 +267,8 @@ class _UserdetailsscreenState extends State<Userdetailsscreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "10 Report Manager",
+                                  TranslationService.translate(
+                                      "10 Report Manager"),
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,

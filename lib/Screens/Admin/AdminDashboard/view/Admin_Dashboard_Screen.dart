@@ -1,8 +1,11 @@
+import 'package:attendanceapp/Screens/Admin/AdminDashboard/controller/AdminDashboardController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../../CommenFiles/getXcontroller.dart';
+import '../../../../CommenFiles/translateService.dart';
 import '../../../PieChartScreen/view/PieChartScreen.dart';
 import '../../../PunchScreenField/PunchScreen/view/PunchScreen.dart';
 import '../../../SettingsScreen/view/SettingsScreen.dart';
@@ -12,6 +15,8 @@ import '../../../ShiftTime/ShiftTimeScreen/view/Shift_Time_From_screen.dart';
 import '../../../UserDetailsScreen/view/UserDetailsScreen.dart';
 
 import '../../../Work/view/Work_Type_Screen.dart';
+import '../../AddNewFacilityScreen/view/AddNewFacilityList.dart';
+import '../../AddNewFacilityScreen/view/AddNewFacilityScreen.dart';
 import '../../FacilityCardDetails/view/Facilities_Screen.dart';
 
 class Admin_Dashboard extends StatefulWidget {
@@ -36,7 +41,8 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: Text(
-                      "Hello!",
+                      TranslationService.translate('Hello!'),
+                      // "Hello!".tr,
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey,
@@ -44,7 +50,8 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                     ),
                   ),
                   Text(
-                    "Admin",
+                    TranslationService.translate('Admin'),
+                    // "Admin".tr,
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -53,28 +60,21 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                 ],
               ),
               Spacer(),
+
               // IconButton(
               //   icon: const Icon(
-              //     Icons.notifications,
+              //     Icons.settings,
               //     size: 30,
               //   ),
               //   //tooltip: 'Setting Icon',
-              //   onPressed: () {},
+              //   onPressed: () {
+              //     Get.toNamed('/Settingsscreen');
+              //     // Navigator.of(context).push(
+              //     //   MaterialPageRoute(
+              //     //       builder: (context) => const Settingsscreen()),
+              //     // );
+              //   },
               // ),
-              IconButton(
-                icon: const Icon(
-                  Icons.settings,
-                  size: 30,
-                ),
-                //tooltip: 'Setting Icon',
-                onPressed: () {
-                  Get.toNamed('/Settingsscreen');
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const Settingsscreen()),
-                  // );
-                },
-              ),
             ],
           ),
           leading: Padding(
@@ -85,6 +85,35 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
               ),
             ),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton(
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 35,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                        value: "en",
+                        child: Text(
+                          'English',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                    DropdownMenuItem(
+                        value: "ka",
+                        child: Text(
+                          'Kannada',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        )),
+                  ],
+                  onChanged: (value) {
+                    controller.setLocale(value);
+                  }),
+            )
+          ],
         ),
         // bottomNavigationBar: BottomAppBar(
         //   notchMargin: 15,
@@ -266,12 +295,19 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Facilities",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
+                                          TranslationService.translate(
+                                              'Facilities'),
+                                          // "Facilities".tr,
+                                          style: adminDashboardcontroller
+                                                  .langsize
+                                              ? TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20)
+                                              : TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 17)),
                                       Container(
                                           width: 40,
                                           height: 40,
@@ -302,7 +338,9 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "3 Fields",
+                                        TranslationService.translate(
+                                            '3 Fields'),
+                                        // "3 Fields".tr,
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.normal,
@@ -342,18 +380,25 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 10, right: 10, top: 15),
+                                      left: 10, right: 2, top: 15),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Work Type",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                      ),
+                                          TranslationService.translate(
+                                              'Work Type'),
+                                          // "Work Type".tr,
+                                          style: adminDashboardcontroller
+                                                  .langsize
+                                              ? TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20)
+                                              : TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16)),
                                       Container(
                                           width: 40,
                                           height: 40,
@@ -383,7 +428,9 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "3 Fields",
+                                        TranslationService.translate(
+                                            '3 Fields'),
+                                        // "3 Fields".tr,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.normal,
@@ -437,7 +484,8 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Shift",
+                                    TranslationService.translate('Shift'),
+                                    // "Shift".tr,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -469,13 +517,15 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "3 Shift Timings",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 18),
-                                  ),
+                                  // Text(
+                                  //   TranslationService.translate(
+                                  //       '3 Shift Timings'),
+                                  //   // "3 Shift Timings".tr,
+                                  //   style: TextStyle(
+                                  //       color: Colors.black,
+                                  //       fontWeight: FontWeight.normal,
+                                  //       fontSize: 18),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -520,7 +570,8 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "User",
+                                    TranslationService.translate('User'),
+                                    // "User".tr,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -555,7 +606,8 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "3 Users",
+                                    TranslationService.translate('3 Users'),
+                                    // "3 Users",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.normal,
@@ -583,7 +635,8 @@ class _Admin_DashboardState extends State<Admin_Dashboard> {
                     height: 50.0,
                     child: ElevatedButton(
                       child: Text(
-                        'VIEW REPORT',
+                        TranslationService.translate('VIEW REPORT'),
+                        // 'VIEW REPORT',
                         style: TextStyle(
                             color: Color(0xff0066FF),
                             fontWeight: FontWeight.bold),

@@ -1,4 +1,6 @@
 import 'package:attendanceapp/CommenFiles/getXcontroller.dart';
+import 'package:attendanceapp/CommenFiles/translateService.dart';
+import 'package:attendanceapp/Screens/SiteHeader/WorkerList/controller/WorkerListController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,24 +46,58 @@ class _SiteheadaddsiteworkerscreenState
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.0), // here the desired height
-            child: AppbarName(
-              title: "Add Worker",
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
+        appBar: AppBar(
+          title: Text(TranslationService.translate("Add Worker")),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton(
+                      underline: SizedBox(),
+                      icon: Icon(
+                        Icons.language,
+                        color: Colors.blue,
+                        size: 35,
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                            value: "en",
+                            child: Text(
+                              'English',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            )),
+                        DropdownMenuItem(
+                            value: "ka",
+                            child: Text(
+                              'Kannada',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            )),
+                      ],
+                      onChanged: (value) {
+                        controller.setLocale(value);
+                      }),
                 ),
-                //tooltip: 'Setting Icon',
-                onPressed: () {
-                  Get.toNamed('/Workerlistscreen');
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(builder: (context) => Workerlistscreen()),
-                  // );
-                },
-              ), //IconButton
-            )),
+              ],
+            ),
+          ],
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            //tooltip: 'Setting Icon',
+            onPressed: () {
+              Get.toNamed('/Workerlistscreen');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(builder: (context) => Workerlistscreen()),
+              // );
+            },
+          ), //IconButton
+        ),
         body: Container(
           margin: const EdgeInsets.all(5),
           child: SingleChildScrollView(
@@ -109,13 +145,14 @@ class _SiteheadaddsiteworkerscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "First Name can't be empty";
+                return TranslationService.translate(
+                    "First Name can't be empty");
               }
 
               //else if (value.length < 10) {}
             },
             keyboardType: TextInputType.name,
-            controller: addSiteWorkerController.FirstNameController,
+            controller: workerListController.firstNameController,
             onChanged: (value) {
               // setState(() {
               //   // Convert the entered value to uppercase and update the controller
@@ -129,7 +166,7 @@ class _SiteheadaddsiteworkerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'First Name',
+                  text: TranslationService.translate("First Name"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -170,13 +207,13 @@ class _SiteheadaddsiteworkerscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Last Name can't be empty";
+                return TranslationService.translate("Last Name can't be empty");
               }
 
               //else if (value.length < 10) {}
             },
             keyboardType: TextInputType.name,
-            controller: addSiteWorkerController.LastNameController,
+            controller: workerListController.lastNameController,
             onChanged: (value) {
               // setState(() {
               //   // Convert the entered value to uppercase and update the controller
@@ -190,7 +227,7 @@ class _SiteheadaddsiteworkerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Last Name',
+                  text: TranslationService.translate("Last Name"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -232,31 +269,24 @@ class _SiteheadaddsiteworkerscreenState
             maxLength: 10,
             validator: (value) {
               if (value!.isEmpty) {
-                return "Mobile Number can't be empty";
+                return TranslationService.translate(
+                    "Mobile Number can't be empty");
               }
               if (value.length != 10)
-                return 'Mobile Number must be of 10 digit';
+                return TranslationService.translate(
+                    "Mobile Number must be of 10 digit");
               else
                 return null;
 
               //else if (value.length < 10) {}
             },
             keyboardType: TextInputType.number,
-            controller: addSiteWorkerController.MobileNumberController,
-            onChanged: (value) {
-              // setState(() {
-              //   // Convert the entered value to uppercase and update the controller
-              // /  usernameController.value = TextEditingValue(
-              //     text: value.toUpperCase(),
-              //     selection: usernameController
-              //         .selection, // Maintain the cursor position
-              //   );
-              // });
-            },
+            controller: workerListController.mobileNumberController,
+            onChanged: (value) {},
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: 'Mobile Number',
+                  text: TranslationService.translate("Mobile Number"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -288,108 +318,44 @@ class _SiteheadaddsiteworkerscreenState
     return Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Container(
-            // decoration: ShapeDecoration(
-            //   shape: RoundedRectangleBorder(
-            //     side: BorderSide(width: 1.0, style: BorderStyle.solid),
-            //     borderRadius: BorderRadius.circular(10),
-            //   ),
-            // ),
-            child: DropdownButtonFormField(
-          decoration: InputDecoration(
-              labelText: "Associate Contractor ",
-              labelStyle: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black),
-              // prefixIcon: Padding(
-              //   padding: const EdgeInsets.all(15.0),
-              //   child: Image.asset(
-              //     'assets/images/mech.png',
-              //     color: Colors.black,
-              //     height: 2,
-              //     width: 2,
-              //   ),
-              // ),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-          value: addSiteWorkerController.Assoicate,
-
-          // validator: (value) {
-          //   if (value == null || value.isEmpty) {
-          //     return "Select Shift can't be empty";
-          //   } else {
-          //     return null;
-          //   }
-          // },
-
-          items: assoicatedrop.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          // After selecting the desired option,it will
-          // change button value to selected value
-          onChanged: (String? newValue) {
-            setState(() {
-              addSiteWorkerController.Assoicate = newValue!;
-            });
-          },
-        )));
+          child: DropdownButtonFormField<String>(
+            value: workerListController.selectedWork,
+            decoration: InputDecoration(labelText: "Select Work"),
+            items: workerListController.workOptions.map((String work) {
+              return DropdownMenuItem<String>(
+                value: work,
+                child: Text(work),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                workerListController.selectedWork = value;
+              });
+            },
+          ),
+        ));
   }
 
   Widget SelectWorkType() {
     return Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Container(
-            // decoration: ShapeDecoration(
-            //   shape: RoundedRectangleBorder(
-            //     side: BorderSide(width: 1.0, style: BorderStyle.solid),
-            //     borderRadius: BorderRadius.circular(10),
-            //   ),
-            // ),
-            child: DropdownButtonFormField(
-          decoration: InputDecoration(
-              labelText: "Select Work Type",
-              labelStyle: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Image.asset(
-                  'assets/images/mech.png',
-                  color: Colors.black,
-                  height: 2,
-                  width: 2,
-                ),
-              ),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-          value: addSiteWorkerController.work,
-
-          // validator: (value) {
-          //   if (value == null || value.isEmpty) {
-          //     return "Select Shift can't be empty";
-          //   } else {
-          //     return null;
-          //   }
-          // },
-
-          items: worktypedrop.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          // After selecting the desired option,it will
-          // change button value to selected value
-          onChanged: (String? newValue) {
-            setState(() {
-              addSiteWorkerController.work = newValue!;
-            });
-          },
-        )));
+          child: DropdownButtonFormField<String>(
+            value: workerListController.selectedWorkType,
+            decoration: InputDecoration(labelText: "Select Work Type"),
+            items: workerListController.workTypeOptions.map((String type) {
+              return DropdownMenuItem<String>(
+                value: type,
+                child: Text(type),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                workerListController.selectedWorkType = value;
+              });
+            },
+          ),
+        ));
   }
 
   Widget ConfirmPasswordField() {
@@ -400,10 +366,11 @@ class _SiteheadaddsiteworkerscreenState
           child: TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return "Confirm Password can't be empty";
+                return TranslationService.translate(
+                    "Confirm Password can't be empty");
               }
               if (value != addSiteWorkerController.EnterPasswordController.text)
-                return 'Not Match';
+                return TranslationService.translate("Not Match");
             },
             keyboardType: TextInputType.number,
             controller: addSiteWorkerController.ConfirmPasswordController,
@@ -420,7 +387,7 @@ class _SiteheadaddsiteworkerscreenState
             decoration: InputDecoration(
               label: RichText(
                 text: new TextSpan(
-                  text: "Confirm Password",
+                  text: TranslationService.translate("Confirm Password"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -456,29 +423,30 @@ class _SiteheadaddsiteworkerscreenState
         child: SizedBox(
           height: 60.0,
           child: ElevatedButton(
-            child: Text(
-              'Submit',
-              style: TextStyle(
-                color: Colors.white,
+              child: Text(
+                TranslationService.translate("Submit"),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
-            ),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 170),
-              backgroundColor: Color(0xff0056f1),
-              // side: BorderSide(color: Colors.yellow, width: 5),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 170),
+                backgroundColor: Color(0xff0056f1),
+                // side: BorderSide(color: Colors.yellow, width: 5),
 
-              textStyle: const TextStyle(
-                fontSize: 20,
-                fontStyle: FontStyle.normal,
+                textStyle: const TextStyle(
+                  fontSize: 20,
+                  fontStyle: FontStyle.normal,
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-            ),
-            onPressed: () {
-              //workerListController.fetchItems();
-              Get.toNamed('/Workerlistscreen');
-            },
-          ),
+              onPressed: () {
+                if (_addsiteglobalkey.currentState!.validate()) {
+                  workerListController.addPostapi();
+                  Get.toNamed('/Workerlistscreen');
+                }
+              }),
         ),
       ),
     );
